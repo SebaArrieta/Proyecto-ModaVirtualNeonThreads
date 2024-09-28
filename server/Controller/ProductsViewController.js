@@ -4,6 +4,7 @@ const { DynamoDBClient, ScanCommand } = require("@aws-sdk/client-dynamodb");
 const client_s3 = new S3Client({ region: "sa-east-1" });
 const client_db = new DynamoDBClient({ region: "sa-east-1" });
 
+
 const dbItemToObject = (Item) => {
     result = {
         'id': parseInt(Item['id']['N']),
