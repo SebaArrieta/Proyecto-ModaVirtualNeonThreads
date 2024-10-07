@@ -53,7 +53,3 @@ exports.GetProducts = async (req, res) => {
         res.json(results)
       });
 };
-
-exports.GetProduct = async (req, res) => {
-
-};

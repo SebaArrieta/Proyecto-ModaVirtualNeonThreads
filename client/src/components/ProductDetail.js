@@ -9,6 +9,23 @@ const ProductDetail = () => {
     const item = location.state['item'];
     console.log(item)
 
+    const handleComprar = async (e) => {
+        e.preventDefault();
+
+        const token = localStorage.getItem('token'); // O sessionStorage
+
+        try {
+            const response = await axios.get('http://localhost:5000/Comprar', {
+                headers: {
+                  Authorization: `${token}`,
+                }
+            });
+            console.log("Respuesta del servidor:", response);
+        } catch (error) {
+            console.error("Error al enviar el formulario:", error);
+        }
+    };
+
     return (
         <div className="container py-5">
             <div className='row'>
@@ -25,7 +42,7 @@ const ProductDetail = () => {
 
                     <div className = "mt-auto">
                         <button className="fs-4 col-md-6">Agregar al carrito</button>
-                        <button className="fs-4 col-md-6">Comprar</button>
+                        <button className="fs-4 col-md-6" onClick={handleComprar}>Comprar</button>
                     </div>
                 </div>
             </div>

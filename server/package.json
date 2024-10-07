@@ -13,8 +13,10 @@
     "@aws-sdk/client-dynamodb": "^3.654.0",
     "@aws-sdk/client-dynamodb-streams": "^3.654.0",
     "@aws-sdk/client-s3": "^3.654.0",
+    "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "express": "^4.21.0",
+    "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.11.3"
   },
   "devDependencies": {
