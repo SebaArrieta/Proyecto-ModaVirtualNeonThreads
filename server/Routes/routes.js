@@ -8,6 +8,6 @@ const verifyToken = require('../middleware/Auth');
 router.get("/GetProduct", ProductsViewController.GetProducts);
 router.post("/SignUp", UserController.SignUp);
 router.post("/Login", UserController.Login);
-router.get("/Comprar", verifyToken, CompraController.Prueba)
+router.get("/Comprar", verifyToken, CompraController.Prueba);
 
 module.exports = router;
