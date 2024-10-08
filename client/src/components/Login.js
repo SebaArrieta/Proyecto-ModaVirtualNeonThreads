@@ -21,6 +21,8 @@ const Login = () => {
             const response = await axios.post('http://localhost:5000/Login', Datos);
             console.log("Respuesta del servidor:", response);
             localStorage.setItem('token', response.data.token);
+            localStorage.setItem('tipo', response.data.tipo);
+
             navigate(`/`);
         } catch (error) {
             console.log(error)

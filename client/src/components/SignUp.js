@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { object, string, date } from 'yup';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Loading from './Loading';
 
 const SignUp = () => {
+    const [loading, setLoading] = useState(false)
+    const [loadingMessage, setLoadingMessage] = useState("")
     const [Datos, setDatos] = useState({
         Nombre: "",
         Apellido: "",
-        Email: "",
+        Correo: "",
         Contraseña: "",
         ConfirmarContraseña: "",
         Direccion: "",
@@ -18,24 +20,6 @@ const SignUp = () => {
     const navigate = useNavigate();
 
     const [errors, setErrors] = useState({});
-
-    let FormSchema = object({
-        Nombre: string().required("Nombre es obligatorio"),
-        Apellido: string().required("Apellido es obligatorio"),
-        Email: string().email("Email no es válido").required("Email es obligatorio"),
-        Contraseña: string()
-            .min(5, "La contraseña debe contener al menos 5 caracteres")
-            .required("Contraseña es obligatoria")
-            .matches(
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{5,}$/,
-                "La contraseña debe tener al menos una letra mayúscula, una minúscula y un número"
-            ),
-        ConfirmarContraseña: string().matches(Datos.Contraseña, "Las contraseñas no coinciden"),
-        Direccion: string().required("Dirección es obligatoria"),
-        Ciudad: string().required("Ciudad es obligatoria"),
-        Zip: string().required("Código postal es obligatorio"),
-        createdOn: date().default(() => new Date()),
-    });
 
     const completeForm = (e) => {
         const { name, value } = e.target;
@@ -49,26 +33,36 @@ const SignUp = () => {
         e.preventDefault();
         setErrors({});
 
+        setLoading(true)
+
         try {
-            await FormSchema.validate(Datos, { abortEarly: false });
-            try {
-                const response = await axios.post('http://localhost:5000/SignUp', Datos);
-                console.log("Respuesta del servidor:", response.data);
-                navigate(`/Login`);
-            } catch (error) {
-                console.error("Error al enviar el formulario:", error);
+            const response = await axios.post('http://localhost:5000/SignUp', Datos);
+            console.log("Respuesta del servidor:", response);
+
+            if(Datos.Correo.match(/(?<=@)[\w.-]+/)[0] === "neon.com"){
+                setLoadingMessage("Comprobando la existencia de la dirección de correo en las bases de datos...")
             }
-        } catch (validationErrors) {
-            const formattedErrors = validationErrors.inner.reduce((acc, error) => {
-                acc[error.path] = error.message; 
-                return acc;
-            }, {});
-            setErrors(formattedErrors);
+
+            const timeoutId = setTimeout(() => {
+                navigate(`/Login`);
+            }, 3000);
+
+            return () => clearTimeout(timeoutId);
+            
+        } catch (error) {
+            console.error("Error al enviar el formulario:", error);
+            if (error.response) {
+                setErrors(error.response.data);
+            } 
+            setLoading(false)
         }
     };
 
     return (
         <div className="container">
+            {loading ? (
+                <Loading message = {loadingMessage}/>
+            ) : (
             <div className="row justify-content-center" style={{ marginTop: '10%' }}>
                 <form className="col-md-7" onSubmit={handleSubmit}>
                     <div className="row mb-3">
@@ -102,13 +96,13 @@ const SignUp = () => {
                         <label htmlFor="inputEmail">Email</label>
                         <input
                             type="email"
-                            className={`form-control ${errors.Email ? 'is-invalid' : ''}`}
+                            className={`form-control ${errors.Correo ? 'is-invalid' : ''}`}
                             id="inputEmail"
-                            name="Email"
-                            value={Datos.Email}
+                            name="Correo"
+                            value={Datos.Correo}
                             onChange={completeForm}
                         />
-                        {errors.Email && <div className="invalid-feedback">{errors.Email}</div>}
+                        {errors.Correo && <div className="invalid-feedback">{errors.Correo}</div>}
                     </div>
 
                     <div className="row mb-3">
@@ -181,6 +175,7 @@ const SignUp = () => {
                     <button type="submit" className="btn btn-primary">Sign Up</button>
                 </form>
             </div>
+            )}
         </div>
     );
 };
