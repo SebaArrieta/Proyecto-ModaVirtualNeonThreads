@@ -1,9 +1,7 @@
 const { S3Client, GetObjectCommand } = require("@aws-sdk/client-s3");
-const { DynamoDBClient, ScanCommand } = require("@aws-sdk/client-dynamodb");
 const db = require('../Database/index');
 
 const client_s3 = new S3Client({ region: "sa-east-1" });
-const client_db = new DynamoDBClient({ region: "sa-east-1" });
 
 const GetImg = async (object) => {
     const input_s3 = {
