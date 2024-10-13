@@ -37,17 +37,37 @@ const GetImg = async (object) => {
 }
 
 exports.GetProducts = async (req, res) => {
-    const query = 'SELECT * FROM Productos';
+    const query = `SELECT p.id, p.Nombre, p.Precio, p.Descripcion, p.Imagen, p.Categoria, p.Color, s.tamaño, s.Stock
+                   FROM Productos p
+                   JOIN Stock s ON p.id = s.Stock_Productos_FK
+                   WHERE s.Stock > 0
+                   GROUP BY p.id, p.Nombre, p.Precio, p.Descripcion, p.Imagen, p.Categoria, p.Color;`;
 
     db.query(query, async (err, results) => {
         if (err) {
           console.error('Error en la consulta:', err);
           return res.status(500).json({ error: 'Error en la consulta' });
         }
+
         for(let i = 0; i < results.length; i++){
             await GetImg(results[i])
         }
 
         res.json(results)
-      });
+    });
+};
+
+exports.GetStock = async (req, res) => {
+    data = req.query
+
+    const query = `SELECT * FROM Stock WHERE Stock_Productos_FK = ${data.ProductosId}`;
+
+    db.query(query, async (err, results) => {
+        if (err) {
+          console.log('Error en la consulta:', err);
+          return res.status(500).json({ error: 'Error en la consulta' });
+        }
+
+        res.status(200).json(results)
+    });
 };

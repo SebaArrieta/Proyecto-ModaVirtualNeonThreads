@@ -6,8 +6,10 @@ const CompraController = require("../Controllers/CompraController")
 const verifyToken = require('../middleware/Auth');
 
 router.get("/GetProduct", ProductsViewController.GetProducts);
+router.get("/GetStock", ProductsViewController.GetStock);
 router.post("/SignUp", UserController.SignUp);
 router.post("/Login", UserController.Login);
 router.get("/Comprar", verifyToken, CompraController.Prueba);
+router.post("/AddCart", verifyToken, CompraController.AddCart);
 
 module.exports = router;
