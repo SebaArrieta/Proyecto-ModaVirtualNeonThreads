@@ -10,11 +10,11 @@ const ProductDetail = () => {
     const item = location.state['item'];
     
     const [Stock, setStock] = useState(null)
-
     const [Select, setSelect] = useState(null)
     const [Cantidad, setCantidad] = useState(0);
 
     const [Error, setError] = useState(null)
+    const [AddSuccess, setAddSuccess] = useState(false)
 
     useEffect(() => {
         axios.get('http://localhost:5000/GetStock',{
@@ -41,31 +41,33 @@ const ProductDetail = () => {
         setCantidad(e.target.value)
     }
 
-    /*const AddToCart = async () => {
-        setErrors();
+    const AddToCart = async () => {
+        setError(null);
+        setAddSuccess(false);
+
+        const token = localStorage.getItem('token');
+        const tipo = localStorage.getItem('tipo');
 
         try {
-            const response = await axios.post('http://localhost:5000/AddCart', Datos);
+            const response = await axios.post('http://localhost:5000/AddCart', {
+                    "StockID": Select.id,
+                    "Cantidad": Cantidad
+            },
+            {
+                headers: {
+                    'Authorization': `${token}`,
+                    'tipo': `${tipo}`
+                }
+            });
+
             console.log("Respuesta del servidor:", response);
-
-            if(Datos.Correo.match(/(?<=@)[\w.-]+/)[0] === "neon.com"){
-                setLoadingMessage("Comprobando la existencia de la dirección de correo en las bases de datos...")
-            }
-
-            const timeoutId = setTimeout(() => {
-                navigate(`/Login`);
-            }, 3000);
-
-            return () => clearTimeout(timeoutId);
+            setAddSuccess(true);
             
         } catch (error) {
             console.error("Error al enviar el formulario:", error);
-            if (error.response) {
-                setErrors(error.response.data);
-            } 
-            setLoading(false)
+            setError(error.response.data.error);
         }
-    };*/
+    };
 
     return (
         <div className="container py-5">
@@ -105,9 +107,9 @@ const ProductDetail = () => {
                             style={{ width: '200px', textAlign: 'center' }}
                             className="form-control fs-5 mb-1" // Added margin-bottom to space out from button
                         />
-                        <button className="btn btn-primary fs-5" style={{ width: '200px', textAlign: 'center' }}>Agregar al carrito</button>
+                        <button className="btn btn-primary fs-5" style={{ width: '200px', textAlign: 'center' }} onClick={AddToCart}>Agregar al carrito</button>
+                        {AddSuccess && <div style={{ width: '200px', textAlign: 'center' }} className="alert alert-info fs-6 mt-1" role="alert">Producto Añadido</div>}
                     </div>
-
                 </div>
             </div>
 

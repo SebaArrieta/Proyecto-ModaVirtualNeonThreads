@@ -68,6 +68,6 @@ exports.GetStock = async (req, res) => {
           return res.status(500).json({ error: 'Error en la consulta' });
         }
 
-        res.status(200).json(results)
+        return res.status(200).json(results)
     });
 };
