@@ -16,6 +16,11 @@ const Navbar = () => {
       }
     }, [])
 
+    
+    const goToAddProduct = () => {
+      navigate(`/AddProduct`);
+    };
+
     const goToLogin = () => {
         navigate(`/Login`);
     };
@@ -50,13 +55,20 @@ const Navbar = () => {
                       <a className="nav-link" onClick={() => SignOut()}>Salir</a>
                     </li>
                     {Tipo == 1 ? (
+                      <>
                       <li className="nav-item">
                         <a className="nav-link">Admin</a>
                       </li>
+
+                    <li className="nav-item">
+                    <a className="nav-link active" aria-current="page" onClick={() => goToAddProduct()}>Añadir Producto</a>
+                    </li>
+                    </>
                     ): null}
                   </ul>
                 ) : 
                   <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+
                     <li className="nav-item">
                       <a className="nav-link active" aria-current="page" onClick={() => goToLogin()}>Ingresar</a>
                     </li>
