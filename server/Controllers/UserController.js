@@ -143,6 +143,19 @@ exports.getPaymentMethodUser = async (req, res) => {
     });
 }
 
+exports.DeletePaymentMethodUser = async (req, res) => {
+    const query = `DELETE FROM Datos_Bancarios WHERE id = "${req.body.id}"`;
+
+    db.query(query, async (err, results) => {
+        if (err) {
+          console.log('Error en la consulta:', err);
+          return res.status(500).json({ error: 'Error en la consulta' });
+        }
+
+        return res.status(200).json(results)
+    });
+}
+
 exports.PostPaymentMethodUser = async (req, res) => {
     try {
         await CardSchema.validate(req.body, { abortEarly: false });

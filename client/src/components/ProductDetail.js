@@ -25,7 +25,7 @@ const ProductDetail = () => {
             setSelect(response.data[0])
         })
         .catch(error => {
-            setError(error.response.data.error)
+            setError(error.response?.data?.error || "Ocurrio un Error")
             console.log(error)
         });
     }, [])
@@ -69,7 +69,7 @@ const ProductDetail = () => {
             
         } catch (error) {
             console.error("Error al enviar el formulario:", error);
-            setError(error.response.data.error);
+            setError(error.response?.data?.error || "Ocurrio un error");
         }
     };
     const hideError = async () => {

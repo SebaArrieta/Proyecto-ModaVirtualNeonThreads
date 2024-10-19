@@ -48,7 +48,7 @@ const Cart = () => {
             setCartItems(updatedCartItems);
         })
         .catch(error => {
-            setError(error.response?.data?.error || 'An error occurred');
+            setError(error.response?.data?.error || 'Ocurrio un error');
             console.log(error);
         });
     };
@@ -70,7 +70,7 @@ const Cart = () => {
             setCartItems(updatedCartItems);
         })
         .catch(error => {
-            setError(error.response?.data?.error || 'An error occurred while removing the item');
+            setError(error.response?.data?.error || 'No se pudo eliminar el producto del carrito');
             console.log(error);
         });
     };

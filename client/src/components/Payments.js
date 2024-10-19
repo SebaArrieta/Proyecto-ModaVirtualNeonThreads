@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Loading from './Loading';
 import ErrorMessage from './ErrorMessage';
 
 const Payments = () => {
+    const navigate = useNavigate();
     const location = useLocation();
     const [items, setItems] = useState([])
 
@@ -23,7 +24,6 @@ const Payments = () => {
 
     const [loading, setLoading] = useState(false);
     const [loadingMessage, setLoadingMessage] = useState("");
-    const [AddSuccess, setAddSuccess] = useState(false);
 
     const [error, setError] = useState({});
 
@@ -93,7 +93,7 @@ const Payments = () => {
         }, 0);
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmitPaymentMethod = async (e) => {
         e.preventDefault();
         setError({});
         setLoading(true);
@@ -111,6 +111,40 @@ const Payments = () => {
             
             setLoading(false);
             setShowPayForm(false)
+
+            setPaymentMethods([...paymentMethods, { 
+                id: response?.data?.insertId || -1,
+                Nombre_Titular: card.Nombre_Titular, 
+                Numero_Tarjeta: card.Numero_Tarjeta.slice(-4) 
+            }]);
+
+        } catch (err) {
+            setError(err.response?.data?.error || err.response?.data || "Ocurrio un error");
+            setLoading(false);
+            console.log(error)
+        }
+    };
+
+    const handleDeletePaymentMethod = async (id) => {
+        setError({});
+        setLoading(true);
+
+        const token = localStorage.getItem('token');
+        const tipo = localStorage.getItem('tipo');
+
+        try {
+            const response = await axios.post('http://localhost:5000/DeletePaymentMethodUser', {id: id}, {
+                headers: {
+                    'Authorization': `${token}`,
+                    'tipo': `${tipo}`
+                }
+            });
+            
+            setLoading(false);
+
+            const updatedMethods = paymentMethods.filter(method => method.id !== id);
+            setPaymentMethods(updatedMethods);
+
         } catch (err) {
             setError(err.response?.data?.error || err.response?.data || "Ocurrio un error");
             setLoading(false);
@@ -127,6 +161,11 @@ const Payments = () => {
             return setError("Metodo de pago no seleccionado")
         }
 
+        if(items.length === 0){
+            setLoading(false)
+            return setError("No hay articulos en el carrito de compras")
+        }
+
         const token = localStorage.getItem('token');
         const tipo = localStorage.getItem('tipo');
 
@@ -138,6 +177,7 @@ const Payments = () => {
                 }
             });
             setLoading(false);
+            goToSummary(response.data.Codigo_Compra)
         } catch (err) {
             setError(err.response?.data?.error || err.response?.data || "Ocurrio un error");
             setLoading(false);
@@ -149,8 +189,12 @@ const Payments = () => {
         setError({})
     }
 
+    const goToSummary = (codigo) => {
+        navigate(`/OrderSummary?codigo=${codigo}`);
+    };
+
     const makePaymentForm = (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmitPaymentMethod}>
             <div className="mb-3">
                 <label htmlFor="Nombre_Titular" className="form-label">Nombre del titular</label>
                 <input
@@ -204,7 +248,6 @@ const Payments = () => {
 
             <button type="submit" className="btn btn-primary mx-2">Guardar Método de Pago</button>
             <button onClick={() => {setShowPayForm(false)}} className="btn btn-danger">Cancelar</button>
-            {AddSuccess && <div style={{ width: '200px', textAlign: 'center' }} className="alert alert-info fs-6 mt-1" role="alert">Metodo de pago añadido</div>}
         </form>
     );
 
@@ -252,6 +295,7 @@ const Payments = () => {
                     </div>
                 </div>
             </div>
+
             <div className='row justify-content-center'>
                 <h1 className="my-4 text-center">Elegir un método de pago</h1>
                 <div className="row">
@@ -265,16 +309,18 @@ const Payments = () => {
                                     <p className="card-text">**** **** **** {item.Numero_Tarjeta}</p>
                                     {item.id === selectedCard ? 
                                     (<p><strong>Tarjeta Seleccionada</strong></p>) : 
-                                    (<a 
-                                        href="#" 
-                                        className="btn btn-primary" 
-                                        onClick={(e) => { 
-                                          e.preventDefault(); // Call preventDefault as a function
-                                          setSelectedCard(item.id); 
-                                        }}
-                                      >
+                                    (<div>
+                                    <a href="#" className="btn btn-primary" onClick={(e) => { 
+                                          e.preventDefault();
+                                          setSelectedCard(item.id);}}>
                                         Seleccionar
-                                      </a>)}
+                                      </a>
+                                     <a href="#" className="btn btn-danger mx-2" onClick={(e) => { 
+                                        e.preventDefault();
+                                        handleDeletePaymentMethod(item.id); }}>
+                                     Eliminar
+                                     </a>
+                                     </div>)}
                                 </div>
                             </div>
                         </div>

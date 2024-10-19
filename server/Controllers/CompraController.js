@@ -98,36 +98,94 @@ exports.DeleteCart = async (req, res) => {
     });
 }
 
-exports.MakeCompra = async (req, res) => {
-    const queryStock = `SELECT p.Nombre
-                   FROM Productos p
-                   JOIN Stock s ON p.id = s.Stock_Productos_FK
-                   JOIN Carrito c ON c.Carrito_Stock_FK = s.id
-                   WHERE s.Stock < c.Cantidad and c.Carrito_Usuarios_FK = ${req.userId};`;
+//genera un codigo de compra y verifica que este sea unico
+const generateUniqueCodigoCompra = async () => {
+    const generateCodigo = () => {
+        return Math.random().toString(36).substr(2, 10);  //Genera un string random de largo 10
+    };
 
-    const queryCompra = `INSERT INTO Compras (Compras_Usuarios_FK, Compras_Stock_FK, Cantidad)
-                         SELECT c.Carrito_Usuarios_FK, c.Carrito_Stock_FK, c.Cantidad
-                         FROM Carrito c
-                         WHERE c.Carrito_Usuarios_FK = ${req.userId};`;
+    let isUnique = false;
+    let newCodigoCompra;
 
-    db.query(queryStock, async (err, results) => {
-        if (err) {
-          console.log('Error en la consulta:', err);
-          return res.status(500).json({ error: 'Error en la consulta' });
-        }
+    while (!isUnique) {
+        newCodigoCompra = generateCodigo();
 
-        if (results.length > 0){
-            console.log(results)
-            return res.status(400).json({ error: `Los siguientes productos ${results.join(" ")} no poseen el stock suficiente` });
-        }
+        const checkCodigoQuery = `SELECT 1 FROM Compras WHERE Codigo_Compra = '${newCodigoCompra}';`;
 
-        db.query(queryCompra, async (err, results) => {
-            if (err) {
-                console.error('Error en la consulta:', err);
-                return res.status(500).json({ error: 'Error en la consulta' });
-            }
-    
-            return res.status(200).json(results)
+        await new Promise((resolve, reject) => { // comprueba que el string generado sea unico
+            db.query(checkCodigoQuery, (err, results) => {
+                if (err) {
+                    console.error('Error checking Codigo_Compra:', err);
+                    return reject(err);
+                }
+
+                if (results.length === 0) {
+                    isUnique = true;
+                }
+
+                resolve();
+            });
         });
+    }
+
+    return newCodigoCompra;
+};
+
+exports.MakeCompra = async (req, res) => {
+    const queryStock = `
+        SELECT p.Nombre
+        FROM Productos p
+        JOIN Stock s ON p.id = s.Stock_Productos_FK
+        JOIN Carrito c ON c.Carrito_Stock_FK = s.id
+        WHERE s.Stock < c.Cantidad AND c.Carrito_Usuarios_FK = ${req.userId};
+    `;
+
+    db.query(queryStock, async (err, results) => { // query para verificar el stock antes de la compra
+        if (err) {
+            console.error('Error in stock query:', err);
+            return res.status(500).json({ error: 'Error in stock query' });
+        }
+
+        if (results.length > 0) {// error de productos sin stock
+            const productNames = results.map(result => result.Nombre).join(', ');
+            return res.status(400).json({ error: `Los siguientes productos no tienen suficiente stock: ${productNames}` });
+        }
+
+        // Generar Codigo_Compra unico
+        try {
+            const uniqueCodigo = await generateUniqueCodigoCompra();
+
+            // Procedimiento que añade los articulos a la tabla compras y elimina stock de la tabla de Stock
+            const queryCompra = `CALL RealizarCompra(${req.userId}, "${uniqueCodigo}");`;
+
+            db.query(queryCompra, (err, results) => {
+                if (err) {
+                    console.error('Error enla compra', err);
+                    return res.status(500).json({ error: 'Error en la compra' });
+                }
+
+                return res.status(200).json({results: results, Codigo_Compra: uniqueCodigo});
+            });
+        } catch (err) {
+            console.error('Error generando Codigo de Compra:', err);
+            return res.status(500).json({ error: 'Error generando Codigo de Compra' });
+        }
     });
 };
+
+exports.GetCompra = async (req, res) => {
+    const query = `SELECT c.id AS CarritoID, p.id AS ProductoID, p.Nombre, p.Precio, p.Color, s.tamaño, s.Stock, c.Cantidad
+                   FROM Productos p
+                   JOIN Stock s ON p.id = s.Stock_Productos_FK
+                   JOIN Compras c ON c.Compras_Stock_FK = s.id
+                   WHERE c.Codigo_Compra = "${req.query.Codigo}";`;
+    
+    db.query(query, async (err, results) => {
+        if (err) {
+            console.error('Error en la consulta:', err);
+            return res.status(500).json({ error: 'Error en la consulta' });
+        }
+
+        return res.json(results)
+    });
+}
