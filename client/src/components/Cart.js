@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ErrorMessage from './ErrorMessage';
+import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
+    const navigate = useNavigate();
+
     const [Error, setError] = useState(null);
     const [CartItems, setCartItems] = useState([]);
 
@@ -72,6 +75,17 @@ const Cart = () => {
         });
     };
 
+    // Function to calculate total price
+    const calculateTotalPrice = () => {
+        return CartItems.reduce((total, item) => {
+            return total + (item.Precio * item.Cantidad);
+        }, 0);
+    };
+
+    const goToPayments = (item) => {
+        navigate(`/Payments`, { state: { item } });
+    };
+
     return (
         <div className="container-fluid py-5">
             <ErrorMessage message={Error}/>
@@ -109,7 +123,6 @@ const Cart = () => {
                                         style={{ width: '80px', textAlign: 'center' }}/>
                                 </td>
                                 <td>
-                                    {/* Delete button */}
                                     <button className="btn btn-danger" onClick={() => handleRemoveItem(item.CarritoID)}>
                                         Eliminar
                                     </button>
@@ -118,8 +131,12 @@ const Cart = () => {
                         ))}
                     </tbody>
                 </table>
-                
-                <button className="mt-4 btn btn-primary">
+
+                <div className="d-flex justify-content-end">
+                    <h4>Total: {calculateTotalPrice()} $</h4>
+                </div>
+
+                <button onClick={() => goToPayments(CartItems)} className="mt-4 btn btn-primary">
                     Proceder al Pago
                 </button>
             </div>

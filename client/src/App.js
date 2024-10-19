@@ -6,7 +6,8 @@ import ProductDetail from "./components/ProductDetail";
 import Navbar from "./components/Navbar";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
-import Cart from "./components/Cart"
+import Cart from "./components/Cart";
+import Payments from "./components/Payments";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/Login" element={<Login />} />
             <Route path="/SignUp" element={<SignUp />} />
             <Route path="/Cart" element={<Cart />} />
+            <Route path="/Payments" element={<Payments />} />
         </Routes>
       </div>
     </>

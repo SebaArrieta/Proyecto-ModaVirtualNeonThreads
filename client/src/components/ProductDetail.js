@@ -45,6 +45,10 @@ const ProductDetail = () => {
         setError(null);
         setAddSuccess(false);
 
+        if(Cantidad === 0){
+            return setError("La cantidad a agregar en el carrito no puede ser igual a 0");
+        }
+
         const token = localStorage.getItem('token');
         const tipo = localStorage.getItem('tipo');
 
@@ -68,10 +72,13 @@ const ProductDetail = () => {
             setError(error.response.data.error);
         }
     };
+    const hideError = async () => {
+        setError(null)
+    }
 
     return (
         <div className="container py-5">
-            <ErrorMessage message={Error}/>
+            <ErrorMessage message={Error} onClose={hideError}/>
             <div className='row'>
                 <div className='row g-4 col-md-4'>
                     <img src={`data:image/jpeg;base64,${item["Imagen"]}`} className="rounded img-fluid mx-auto" alt="Product 1"/>

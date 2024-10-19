@@ -58,6 +58,10 @@ const SignUp = () => {
         }
     };
 
+    const hideError = async () => {
+        setErrors({})
+    }
+
     return (
         <div className="container">
             {loading ? (
