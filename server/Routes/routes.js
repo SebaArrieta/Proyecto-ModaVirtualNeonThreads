@@ -15,6 +15,7 @@ router.post("/DeleteCart", verifyToken, CompraController.DeleteCart);
 router.post("/ModifyQuantity", verifyToken, CompraController.ModifyQuantity);
 router.post("/SignUp", UserController.SignUp);
 router.post("/Login", UserController.Login);
+router.post("/deleteUser", verifyToken, UserController.DeleteUser);
 router.post("/AddCart", verifyToken, CompraController.AddCart);
 router.post("/PostPaymentMethodUser", verifyToken, UserController.PostPaymentMethodUser);
 router.post("/DeletePaymentMethodUser", verifyToken, UserController.DeletePaymentMethodUser);

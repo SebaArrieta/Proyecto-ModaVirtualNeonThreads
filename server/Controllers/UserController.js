@@ -105,7 +105,6 @@ exports.Login = async (req, res) => {
         }
 
         try {
-            console.log(user)
             const token = jwt.sign({ userId: user.id, tipo: user.Tipo }, 'secret', {
                 expiresIn: '72h',
             });
@@ -119,6 +118,20 @@ exports.Login = async (req, res) => {
 
 exports.getUser = async (req, res) => {
     const query = `SELECT * FROM Usuarios WHERE id = "${req.userId}"`;
+
+    db.query(query, async (err, results) => {
+        if (err) {
+          console.log('Error en la consulta:', err);
+          return res.status(500).json({ error: 'Error en la consulta' });
+        }
+
+        return res.status(200).json(results)
+    });
+}
+
+exports.DeleteUser = async (req, res) => {
+    console.log(req.userId)
+    const query = `DELETE FROM Usuarios WHERE id = "${req.userId}"`;
 
     db.query(query, async (err, results) => {
         if (err) {

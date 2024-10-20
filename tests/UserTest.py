@@ -1,9 +1,54 @@
 import unittest
 import requests
 
-BASE_URL = 'http://localhost:5000'  # Cambia esto por la URL donde se esté ejecutando tu API
+BASE_URL = 'http://localhost:5000' 
 
 class TestUserAPI(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        url = f"{BASE_URL}/SignUp"
+        data = {
+            "Nombre": "Sebastián",
+            "Apellido": "Arrieta",
+            "Correo": "sebastian@example.com",
+            "Contraseña": "Password123",
+            "ConfirmarContraseña": "Password123",
+            "Direccion": "Calle 123",
+            "Ciudad": "Santiago",
+            "Zip": "12345"
+        }
+
+        response = requests.post(url, json=data)
+        print(response.json()) #response.json para obtener el response completo
+
+        url = f"{BASE_URL}/Login"
+        data = {
+            "Correo": "sebastian@example.com",
+            "Contraseña": "Password123"
+        }
+        response = requests.post(url, json=data)
+        print(response.json())
+
+        cls.CorreoUserCreated = data['Correo']
+        cls.PasswordUserCreated = data['Contraseña']
+        cls.LoginToken = response.json()['token']
+        cls.LoginTipo = response.json()['tipo']
+    
+    @classmethod
+    def tearDownClass(cls):
+        url = f"{BASE_URL}/deleteUser"
+        headers = {"Authorization": f"{cls.LoginToken}", "tipo": f"{cls.LoginTipo}"}
+        print(headers)
+        
+        response = requests.post(url, json={}, headers=headers)
+
+        print(response.json())
+
+        del cls.CorreoUserCreated
+        del cls.PasswordUserCreated
+        del cls.LoginToken
+        del cls.LoginTipo
 
     def test_signup(self):
         url = f"{BASE_URL}/SignUp"
