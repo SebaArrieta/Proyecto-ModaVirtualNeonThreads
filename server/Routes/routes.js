@@ -9,8 +9,8 @@ router.get("/GetProduct", ProductsViewController.GetProducts);
 router.get("/GetStock", ProductsViewController.GetStock);
 router.get("/GetCart", verifyToken, CompraController.GetCart);
 router.get("/GetCompra", verifyToken, CompraController.GetCompra);
-router.get("/getUser", verifyToken, UserController.getUser)
-router.get("/getPaymentMethodUser", verifyToken, UserController.getPaymentMethodUser)
+router.get("/getUser", verifyToken, UserController.getUser);
+router.get("/getPaymentMethodUser", verifyToken, UserController.getPaymentMethodUser);
 router.post("/DeleteCart", verifyToken, CompraController.DeleteCart);
 router.post("/ModifyQuantity", verifyToken, CompraController.ModifyQuantity);
 router.post("/SignUp", UserController.SignUp);
