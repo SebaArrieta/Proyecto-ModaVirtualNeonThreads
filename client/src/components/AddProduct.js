@@ -11,6 +11,7 @@ const AddProduct = () => {
 
     const [message, setMessage] = useState('');
 
+    // Handle input change for text fields (Nombre, Descripcion, Precio)
     const handleChange = (e) => {
         const { name, value } = e.target;
         setProductData({
@@ -19,36 +20,53 @@ const AddProduct = () => {
         });
     };
 
+    // Handle image file change
     const handleImageChange = (e) => {
         setProductData({
             ...productData,
-            Imagen: e.target.files[0],
+            Imagen: e.target.files[0], // Append the image file
         });
     };
 
+    // Handle form submission
     const handleSubmit = async (e) => {
+        console.log("handleSubmit started");
         e.preventDefault();
 
-        const token = localStorage.getItem('token'); // O sessionStorage
+        const token = localStorage.getItem('token'); // Fetch token from localStorage
+        if (!token) {
+            setMessage('Error: No se encontró un token de autenticación');
+            return;
+        }
+        console.log("Token fetched:", token);
 
+        // Create a FormData object to send multipart form data
         const formData = new FormData();
         formData.append('Nombre', productData.Nombre);
         formData.append('Descripcion', productData.Descripcion);
         formData.append('Precio', productData.Precio);
-        formData.append('Imagen', productData.Imagen);
+        formData.append('Imagen', productData.Imagen); // Append image file
+
+        console.log("FormData created");
 
         try {
-            const response = await axios.post('http://localhost:5000/AgregarProducto', formData, {
+            // Send a POST request to add the product
+            const response = await axios.post('http://localhost:5000/AddProduct', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    Authorization: `${token}`,
+                    'Authorization': `Bearer ${token}`, // Added 'Bearer' prefix for token
                 },
             });
+            console.log("Product added successfully");
+
+            // Update the UI with a success message
             setMessage('Producto agregado con éxito');
-            console.log('Respuesta del servidor:', response);
+            console.log('Server response:', response);
         } catch (error) {
+            console.error('Error while adding product:', error);
+
+            // Show error message on the UI
             setMessage('Error al agregar el producto');
-            console.error('Error al enviar el formulario:', error);
         }
     };
 

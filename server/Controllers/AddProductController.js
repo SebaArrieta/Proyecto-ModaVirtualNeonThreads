@@ -1,16 +1,20 @@
+const multer = require('multer');
+const upload = multer(); // Use memory storage to handle the uploaded files in memory
+
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const db = require('../Database/index');
-const { v4: uuidv4 } = require('uuid'); // To generate unique filenames for S3
+const { v4: uuidv4 } = require('uuid');
+const { promisify } = require('util');
+const queryPromise = promisify(db.query).bind(db);
 
 const client_s3 = new S3Client({ region: "sa-east-1" });
 
-// Function to upload an image to S3
 const UploadImg = async (fileName, imageBuffer) => {
     const input_s3 = {
         Bucket: "inf331-proyecto",
         Key: fileName,
         Body: imageBuffer,
-        ContentType: "image/jpeg" // or the appropriate MIME type of the image
+        ContentType: "image/jpeg",
     };
 
     const command_s3 = new PutObjectCommand(input_s3);
@@ -18,32 +22,35 @@ const UploadImg = async (fileName, imageBuffer) => {
     return response_s3;
 }
 
-// Controller to add a new product
-exports.AddProduct = async (req, res) => {
-    try {
-        const { Nombre, Descripcion, Precio } = req.body;
-        const { Imagen } = req.files; // Assuming you're using middleware like multer for file uploads
+exports.AddProduct = [
+    upload.single('Imagen'), // Multer middleware to handle image upload
+    async (req, res) => {
+        try {
+            // Get form data from request body
+            const { Nombre, Descripcion, Precio } = req.body;
+            const { buffer } = req.file; // Image file is now available in req.file
 
-        // Generate a unique name for the image to store in S3
-        const uniqueFileName = `${uuidv4()}.jpg`;
-
-        // Upload the image to S3
-        await UploadImg(uniqueFileName, Imagen.data);
-
-        // Store the product info in the database, including the S3 key for the image
-        const query = 'INSERT INTO Productos (Nombre, Descripcion, Precio, Imagen) VALUES (?, ?, ?, ?)';
-        const values = [Nombre, Descripcion, Precio, uniqueFileName];
-
-        db.query(query, values, (err, result) => {
-            if (err) {
-                console.error('Error en la consulta:', err);
-                return res.status(500).json({ error: 'Error al agregar el producto' });
+            if (!Nombre || !Descripcion || !Precio || !buffer) {
+                return res.status(400).json({ error: 'Missing product data or image' });
             }
 
+            // Generate a unique filename for the image
+            const uniqueFileName = `${uuidv4()}.jpg`;
+
+            // Upload the image to S3
+            await UploadImg(uniqueFileName, buffer);
+
+            // Insert product details into the database
+            const query = 'INSERT INTO Productos (Nombre, Descripcion, Precio, Imagen) VALUES (?, ?, ?, ?)';
+            const values = [Nombre, Descripcion, Precio, uniqueFileName];
+
+            await queryPromise(query, values);
+
+            // Respond with success message
             res.status(201).json({ message: 'Producto agregado con éxito' });
-        });
-    } catch (error) {
-        console.error('Error al agregar el producto:', error);
-        res.status(500).json({ error: 'Error interno del servidor' });
+        } catch (error) {
+            console.error('Error adding the product:', error);
+            res.status(500).json({ error: 'Error interno del servidor' });
+        }
     }
-};
+];
