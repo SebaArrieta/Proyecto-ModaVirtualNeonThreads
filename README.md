@@ -1,21 +1,42 @@
 # Documentación del Proyecto
-#Guia de instalación
+# Guía de Instalación
 
-Para ejecutar el proyecto es necesario iniciar la instancia RDS en aws. Para esto es necesario ingresar con el siguiente usuario IAM
+## 1. Iniciar la instancia RDS en AWS
 
-Usuario: ProyectoIAM
-Contraseña: ProyectoEquipo9
+Para ejecutar el proyecto, es necesario iniciar la instancia RDS en AWS. Sigue estos pasos:
 
-Luego buscar RDS en el buscador como se muestra a continuación y dirigirse a la sección de bases de datos disponible en el panel izquierdo.
-![image](https://github.com/user-attachments/assets/447b7d17-064b-43aa-88dc-8c515f8c8456)
+### a) Ingreso con credenciales IAM
 
-Asegurarse de que se encuentra en la region de sao paulo
-![image](https://github.com/user-attachments/assets/bd8cfcbe-afde-4271-8891-13ab8db508f2)
+Utiliza las siguientes credenciales para acceder a la consola de AWS:
 
-Seleccionar la base de datos y en acciones dar click en "comenzar", el proceso de inicio puede tardar unos minutos
-![image](https://github.com/user-attachments/assets/31518e8d-6d32-4824-be7d-46a6cbb5e2f0)
+- **Usuario IAM**: `ProyectoIAM`
+- **Contraseña**: `ProyectoEquipo9`
 
-Una vez iniciada la base de datos para ejecutar el programa se utilizan los siguientes comandos.
+### b) Buscar y acceder a RDS
+
+1. Una vez dentro de la consola de AWS, busca "RDS" en la barra de búsqueda, como se muestra en la siguiente imagen:
+
+   ![Buscar RDS](https://github.com/user-attachments/assets/447b7d17-064b-43aa-88dc-8c515f8c8456)
+
+2. En el panel izquierdo, selecciona la opción **"Bases de datos"**.
+
+### c) Verificar la región
+
+Asegúrate de que te encuentras en la **región de São Paulo**, como se muestra en la siguiente imagen:
+
+   ![Región de São Paulo](https://github.com/user-attachments/assets/bd8cfcbe-afde-4271-8891-13ab8db508f2)
+
+### d) Iniciar la base de datos
+
+1. Selecciona la base de datos en la lista.
+2. En las **acciones** disponibles, selecciona la opción **"Comenzar"**. El proceso de inicio puede tardar unos minutos:
+
+   ![Iniciar base de datos](https://github.com/user-attachments/assets/31518e8d-6d32-4824-be7d-46a6cbb5e2f0)
+
+## 2. Ejecutar el programa y las pruebas
+
+Una vez que la base de datos esté activa, puedes proceder a ejecutar el programa y las pruebas unitarias utilizando los siguientes comandos en la terminal:
+
 `make run` ejecuta el programa
 `make compra_test` ejecuta las pruebas del modulo de compra
 `make usuario_test` ejecuta las pruebas del modulo de usuarios
