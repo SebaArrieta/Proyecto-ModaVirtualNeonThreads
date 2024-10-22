@@ -98,4 +98,4 @@ Alternativamente, las pruebas también pueden ejecutarse desde la terminal utili
 - **Salida obtenida**: `test_PurchaseProductNoCart (Compra_test.TestCompra.test_PurchaseProductNoCart)` ... **FAIL**.
   - **Error**: AssertionError: 200 != 500.
 
-## 3. Problemas encontrados y soluciones
+## 4. Problemas encontrados y soluciones
