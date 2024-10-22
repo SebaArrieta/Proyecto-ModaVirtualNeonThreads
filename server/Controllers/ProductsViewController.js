@@ -63,6 +63,68 @@ exports.GetProducts = async (req, res) => {
     });
 };
 
+exports.AddProductTest = async (req, res) => {
+    if(req.userTipo == 0){
+        return res.status(500).json({ error: 'Error' });
+    }
+
+    const query = `INSERT INTO Productos
+                    (Nombre, Precio, Descripcion, Imagen, Categoria, Color)
+                    VALUES('${req.body.Nombre}', ${req.body.Precio}, '${req.body.Descripcion}', '${req.body.Imagen}', '${req.body.Categoria}', '${req.body.Color}');`;
+
+    db.query(query, async (err, results_p) => {
+        if (err) {
+            console.error('Error en la consulta:', err);
+            return res.status(500).json({ error: 'Error en la consulta' });
+        }
+
+        let result_stock = [];
+
+        // Usar Promise.all para manejar las operaciones de inserción del stock
+        const stockPromises = req.body.stock.map(i => {
+            const query_Stock = `INSERT INTO Stock
+                                (Stock, Tamaño, Stock_Productos_FK)
+                                VALUES(${i.Stock}, '${i.Tamaño}', ${results_p.insertId});`;
+
+            return new Promise((resolve, reject) => {
+                db.query(query_Stock, (err, results_s) => {
+                    if (err) {
+                        console.log('Error en la consulta:', err);
+                        reject(err);
+                    } else {
+                        resolve(results_s);
+                    }
+                });
+            });
+        });
+
+        // Esperar a que todas las inserciones de stock se completen
+        try {
+            result_stock = await Promise.all(stockPromises);
+            res.json({"Producto": results_p, "Stock": result_stock});
+        } catch (error) {
+            res.status(500).json({ error: 'Error en la consulta de stock' });
+        }
+    });
+}
+
+exports.DeleteProductTest = async (req, res) => {
+    if(req.userTipo == 0){
+        return res.status(500).json({ error: 'Error' });
+    }
+    const query = `DELETE FROM neon.Productos
+                    WHERE id=${req.body.id};`;
+
+    db.query(query, async (err, results) => {
+        if (err) {
+            console.error('Error en la consulta:', err);
+            return res.status(500).json({ error: 'Error en la consulta' });
+        }
+
+        res.json(results)
+    });
+}
+
 exports.GetStock = async (req, res) => {
     data = req.query
 

@@ -8,6 +8,7 @@ const verifyToken = (req, res, next) => {
         const decoded = jwt.verify(token, 'secret');
         if(decoded.tipo != tipo) return res.status(401).json({ error: 'Access denied' });
         req.userId = decoded.userId;
+        req.userTipo = decoded.tipo;
         next();
     } catch (error) {
         res.status(401).json({ error: 'Invalid token' });

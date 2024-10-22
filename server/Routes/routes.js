@@ -20,5 +20,7 @@ router.post("/AddCart", verifyToken, CompraController.AddCart);
 router.post("/PostPaymentMethodUser", verifyToken, UserController.PostPaymentMethodUser);
 router.post("/DeletePaymentMethodUser", verifyToken, UserController.DeletePaymentMethodUser);
 router.post("/MakeCompra", verifyToken, CompraController.MakeCompra);
+router.post("/AddProductTest", verifyToken, ProductsViewController.AddProductTest);
+router.post("/DeleteProductTest", verifyToken, ProductsViewController.DeleteProductTest);
 
 module.exports = router;
