@@ -9,8 +9,8 @@ class TestCompra(unittest.TestCase):
     PasswordUserCreated = ""
     LoginToken = ""
     LoginTipo = ""
-    idProducto = 1;
-    idStock = 1;
+    idProducto = 1
+    idStock = 1
 
     @classmethod
     def setUp(self):

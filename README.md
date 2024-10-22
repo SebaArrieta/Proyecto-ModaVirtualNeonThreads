@@ -1,6 +1,9 @@
 # Documentación del Proyecto
 # Guía de Instalación
 
+### Link Video:
+https://usmcl-my.sharepoint.com/:v:/g/personal/felipe_buscaglia_usm_cl/EZK3gVAOUDZEokYMnAyvchEBlbyD8I2qNq6LGVbw2NX4Ag?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=ptJzEV
+
 ### 1. Iniciar la instancia RDS en AWS
 
 Para ejecutar el proyecto, es necesario iniciar la instancia RDS en AWS. Sigue estos pasos:
