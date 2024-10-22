@@ -55,12 +55,21 @@ El proyecto realizado consiste en una tienda de ropa en línea en la que se abor
 
 La metodología de trabajo fue la asignación de tareas en jira que se iban desarrollando por etapas hasta completarlas, de igual forma el flujo de trabajo consistió en la utilización de GitFlow para integrar el progreso obtenido. Un canal de comunicación utilizado fue Slack que integrado con GitHub y Jira nos permitió hacer un seguimiento de la aplicación y a su vez se realizaban reuniones en línea para evaluar el progreso y asignar nuevas tareas.
 
-# Jira
+## Jira
 ![image](https://github.com/user-attachments/assets/0983aa7a-9ba8-401d-98bf-4c7e49ed7e82)
-# Slack
+## Slack
 ![image](https://github.com/user-attachments/assets/ca1f9ef4-88b4-4471-b62f-e1d63b2a5774)
-# Ramas de GitFlow
+## Ramas de GitFlow
 ![image](https://github.com/user-attachments/assets/0a555cd3-c4d6-4b0e-981e-b7ffbaab6e98)
+
+Ademas en etapas tempranas del proyecto realizamos diseños iniciales de como prodria verse la aplicacion y tambien realizamos diagramas que para modelar las bases de datos, todo esto con el proposito de tener una idea inicial sobre como iniciar el desarrollo
+
+## Esquemas de diseño
+![image](https://github.com/user-attachments/assets/5ac36f3d-d1dd-49f0-9646-6c98a896a357)
+![image](https://github.com/user-attachments/assets/dc7e9666-1948-4564-8127-2014078ca677)
+
+## Modelado de bases de datos
+
 
 # Especificar dependencias entre la herramienta y la aplicación
 La infraestructura del proyecto consiste en un front-end desarrollado con React que se comunica con un servidor en el Back-end de la aplicación realizado con Node.js, de igual forma, para el almacenamiento de recursos y bases de datos se utilizaron servicios de aws como RDS o Buckets S3, las credenciales están disponibles en el archivo. env para propósitos de la entrega aunque estas deberían ser privadas.
@@ -143,3 +152,7 @@ Alternativamente, las pruebas también pueden ejecutarse desde la terminal utili
   - **Error**: AssertionError: 200 != 500.
 
 ## 4. Problemas encontrados y soluciones
+
+Un problema recurrente fue el de encontrar una solución para diferenciar las cuentas de los modistas que tienen permisos de administrador de los usuarios normales, para esto se asumió que como en el contexto del problema este desarrollo va dirigido a una tienda, esta posee su propio dominio de correos electrónicos que se les otorga a los modistas, por lo que cada usuario cuyo correo termine en @neon.com podrá acceder a las funcionalidades extra de la página.
+
+Otro problema encontrado fue el de procesar los pagos, para propósitos de esta entrega solo se realizó una simulación de cómo se verían estos en el que el usuario debe ingresar un método de pago y luego la página se encarga de validar el formato de los datos y generar un código de compra.
