@@ -80,7 +80,7 @@ Las pruebas unitarias se desarrollan en un entorno independiente de la aplicaci�
 
 ## Estrategia de pruebas utilizadas
 
-Cada uno de los archivos que contienen las pruebas se encargan de realizar un proceso de testing de las funcionalidades más importantes de los principales módulos de la aplicación, estos módulos probados son los de usuarios, compra y productos.
+Cada uno de los archivos que contienen las pruebas se encargan de realizar un proceso de testing de las funcionalidades más importantes de los principales módulos de la aplicación, estos módulos probados son los de usuarios, compra y productos, adicionalmente se iran realizando mas pruebas en las siguientes entregas.
 
 Las condiciones de cada prueba, como el tener un usuario autenticado, se estructuran de manera automática antes de iniciar con el proceso y cuando este termina se eliminan todo nuevo registro en la base de datos a utilizar en las pruebas para dejar al sistema en el estado anterior al testing de las componentes.
 
