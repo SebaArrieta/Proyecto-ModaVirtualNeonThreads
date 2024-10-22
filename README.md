@@ -21,7 +21,7 @@ La metodología de trabajo fue la asignación de tareas en jira que se iban desa
 # Especificar dependencias entre la herramienta y la aplicación
 La infraestructura del proyecto consiste en un front-end desarrollado con React que se comunica con un servidor en el Back-end de la aplicación realizado con Node.js, de igual forma, para el almacenamiento de recursos y bases de datos se utilizaron servicios de aws como RDS o Buckets S3, las credenciales están disponibles en el archivo. env para propósitos de la entrega aunque estas deberían ser privadas.
 
-Las pruebas unitarias se desarrollan en un entorno independiente de la aplicación, estas consisten principalmente en probar los distintos resultados obtenidos de los endpoints del servidor en Node.js, no existen dependencias adicionales con entre la aplicación y las pruebas excepto de que la aplicación debe estar ejecutándose localmente para ser accedida desde los enlaces del localhost y además la instancia de RDS debe estar ejecutándose.
+Las pruebas unitarias se desarrollan en un entorno independiente de la aplicación, estas consisten principalmente en probar los distintos resultados obtenidos de los endpoints del servidor en Node.js, no existen dependencias adicionales entre la aplicación y las pruebas excepto de que la aplicación debe estar ejecutándose localmente para ser accedida desde los enlaces del localhost y además la instancia de RDS debe estar ejecutándose.
 
 ## 3. Pruebas
 
@@ -31,7 +31,18 @@ Cada uno de los archivos que contienen las pruebas se encargan de realizar un pr
 
 Las condiciones de cada prueba, como el tener un usuario autenticado, se estructuran de manera automática antes de iniciar con el proceso y cuando este termina se eliminan todo nuevo registro en la base de datos a utilizar en las pruebas para dejar al sistema en el estado anterior al testing de las componentes.
 
-# Pruebas de Carrito de Compras
+# Procedimiento de ejecución de pruebas
+
+Para la ejecucion de las pruebas se utilizaron extensiones del visual studio code que en conjunto con la herramienta proporcionaba un entorno junto con una interfaz para la ejecucion y visualizacion de los resultados de las pruebas.
+
+Imagen de la interfaz de Visual Studio Code
+![image](https://github.com/user-attachments/assets/f49f9428-f143-4597-b415-a30d5001b7b9)
+
+De igual forma tambien pueden ejecutarse las pruebas con el siguiente comando de ejecución de python
+
+`python -m unittest test_example.py`
+
+# Resultados: pruebas de Carrito de Compras
 
 ## Prueba 1.1: Añadir un nuevo producto al carrito
 
@@ -87,11 +98,4 @@ Las condiciones de cada prueba, como el tener un usuario autenticado, se estruct
 - **Salida obtenida**: `test_PurchaseProductNoCart (Compra_test.TestCompra.test_PurchaseProductNoCart)` ... **FAIL**.
   - **Error**: AssertionError: 200 != 500.
 
-
-
-## 4. Dependencias entre la Herramienta y la Aplicación
-
-La herramienta de pruebas unitarias **unittest** se utiliza para verificar las funcionalidades implementadas en los módulos de la aplicación. No existen dependencias externas adicionales, pero es necesario contar con un entorno donde Python esté correctamente instalado. Las dependencias específicas del proyecto se manejan a través de un archivo `requirements.txt` donde se incluyen las librerías adicionales utilizadas por la aplicación y las pruebas.
-
-```bash
-pip install -r requirements.txt
+## 3. Problemas encontrados y soluciones
