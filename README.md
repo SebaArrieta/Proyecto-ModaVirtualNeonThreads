@@ -2,7 +2,7 @@
 
 ## 1. Alcances de la Herramienta
 
-Este proyecto utiliza **unittest** como herramienta de pruebas unitarias para garantizar la calidad y el correcto funcionamiento de las funcionalidades desarrolladas. Unittest permite validar el comportamiento esperado de los diferentes módulos de la aplicación de manera aislada, detectando errores o desviaciones en etapas tempranas del desarrollo.
+Este proyecto utiliza **unittest** como herramienta de pruebas unitarias para garantizar la calidad y el correcto funcionamiento de las funcionalidades desarrolladas. Unittest permite validar el comportamiento esperado de los diferentes módulos de la aplicación de manera aislada, detectando errores o desviaciones en las distintas etapas del desarrollo.
 
 ## 2. Descripción del Trabajo Realizado
 
@@ -23,11 +23,15 @@ La infraestructura del proyecto consiste en un front-end desarrollado con React 
 
 Las pruebas unitarias se desarrollan en un entorno independiente de la aplicación, estas consisten principalmente en probar los distintos resultados obtenidos de los endpoints del servidor en Node.js, no existen dependencias adicionales con entre la aplicacion y las pruebas excepto de que la aplicacion debe estar ejecutandose localmente para ser accedida desde los enlaces del localhost y ademas la instancia de RDS debe estar ejecutandose.
 
-## 3. Proyecto
+## 3. Pruebas
 
-El proyecto consiste en [describir brevemente el proyecto, por ejemplo, una API, un sistema de logística, etc.]. Está estructurado de la siguiente manera:
-- **src/**: Código fuente del proyecto.
-- **tests/**: Contiene los archivos de pruebas unitarias.
+# Estrategia de pruebas utilizadas
+
+Cada uno de los archivos que contienen las pruebas se encargan de realizar un proceso de testing de las funcionalidades mas importantes de los principales modulos de la aplicación, estos modulos probados son los de usuarios, compra y productos.
+
+Pruebas del modulo de compra:
+
+1. 
 
 ## 4. Dependencias entre la Herramienta y la Aplicación
 
