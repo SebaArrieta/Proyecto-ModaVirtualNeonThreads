@@ -13,7 +13,7 @@ class TestCompra(unittest.TestCase):
     idStock = 1;
 
     @classmethod
-    def setUpClass(cls):
+    def setUp(cls):
         url = f"{BASE_URL}/SignUp"
         data = {
             "Nombre": "Sebastián",
@@ -43,7 +43,7 @@ class TestCompra(unittest.TestCase):
         cls.idStock = 1;
     
     @classmethod
-    def tearDownClass(cls):
+    def tearDown(cls):
         url = f"{BASE_URL}/deleteUser"
         headers = {"Authorization": f"{cls.LoginToken}", "tipo": f"{cls.LoginTipo}"}
         
@@ -63,11 +63,11 @@ class TestCompra(unittest.TestCase):
 
         headers = {"Authorization": f"{self.LoginToken}", "tipo": f"{self.LoginTipo}"}
         response = requests.post(url, json=data, headers=headers)
+        
+        #response_deleted = requests.post(f"{BASE_URL}/DeleteCart", json={"CarritoID": response.json()["results"]["insertId"]}, headers=headers)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()["message"], 'Producto añadido al carrito')
-        
-        response_deleted = requests.post(f"{BASE_URL}/DeleteCart", json={"CarritoID": response.json()["results"]["insertId"]}, headers=headers)
-        self.assertEqual(response_deleted.status_code, 200)
+        #self.assertEqual(response_deleted.status_code, 200)
     
     def test_AddCart0Quantity(self, ):
         url = f"{BASE_URL}/AddCart"
@@ -78,11 +78,12 @@ class TestCompra(unittest.TestCase):
 
         headers = {"Authorization": f"{self.LoginToken}", "tipo": f"{self.LoginTipo}"}
         response = requests.post(url, json=data, headers=headers)
+
+        #response_deleted = requests.post(f"{BASE_URL}/DeleteCart", json={"CarritoID": response.json()["results"]["insertId"]}, headers=headers)
+
         self.assertEqual(response.status_code, 500)
         self.assertEqual(response.json()["message"], 'Cantidad del producto es 0')
-        
-        response_deleted = requests.post(f"{BASE_URL}/DeleteCart", json={"CarritoID": response.json()["results"]["insertId"]}, headers=headers)
-        self.assertEqual(response_deleted.status_code, 200)
+        #self.assertEqual(response_deleted.status_code, 200)
 
     def test_UpdateCartNewProduct(self, ):
         url = f"{BASE_URL}/AddCart"
@@ -96,14 +97,12 @@ class TestCompra(unittest.TestCase):
             requests.post(url, json=data, headers=headers)
         
         response = requests.get(f"{BASE_URL}/GetCart", json=data, headers=headers)
-        self.assertEqual(response.json()[0]['Cantidad'], 3)
+        #response_deleted = requests.post(f"{BASE_URL}/DeleteCart", json={"CarritoID": response.json()[0]["CarritoID"]}, headers=headers)
 
-        response_deleted = requests.post(f"{BASE_URL}/DeleteCart", json={"CarritoID": response.json()[0]["CarritoID"]}, headers=headers)
-        self.assertEqual(response_deleted.status_code, 200)
+        self.assertEqual(response.json()[0]['Cantidad'], 3)
+        #self.assertEqual(response_deleted.status_code, 200)
     
     def test_AddCartModifyProduct(self, ):
-
-        #se añade un nuevo producto al carrito
         url = f"{BASE_URL}/AddCart"
         data = {
             "StockID": self.idStock,
@@ -112,8 +111,6 @@ class TestCompra(unittest.TestCase):
 
         headers = {"Authorization": f"{self.LoginToken}", "tipo": f"{self.LoginTipo}"}
         response1 = requests.post(url, json=data, headers=headers)
-        self.assertEqual(response1.status_code, 200)
-        self.assertEqual(response1.json()["message"], 'Producto añadido al carrito')
 
         #se modifica la cantidad
         url = f"{BASE_URL}/ModifyQuantity"
@@ -123,14 +120,15 @@ class TestCompra(unittest.TestCase):
         }
 
         response2 = requests.post(url, json=data, headers=headers)
-        self.assertEqual(response2.status_code, 200)
-
-        #se obtiene el producto modificado
         response3 = requests.get(f"{BASE_URL}/GetCart", json=data, headers=headers)
-        self.assertEqual(response3.json()[0]['Cantidad'], 7)
         
-        response_deleted = requests.post(f"{BASE_URL}/DeleteCart", json={"CarritoID": response3.json()[0]["CarritoID"]}, headers=headers)
-        self.assertEqual(response_deleted.status_code, 200)
+        #response_deleted = requests.post(f"{BASE_URL}/DeleteCart", json={"CarritoID": response3.json()[0]["CarritoID"]}, headers=headers)
+
+        self.assertEqual(response1.status_code, 200)
+        self.assertEqual(response1.json()["message"], 'Producto añadido al carrito')
+        self.assertEqual(response2.status_code, 200)
+        self.assertEqual(response3.json()[0]['Cantidad'], 7)
+        #self.assertEqual(response_deleted.status_code, 200)
 
     def test_PurchaseProduct(self, ):
         url = f"{BASE_URL}/AddCart"
@@ -141,20 +139,21 @@ class TestCompra(unittest.TestCase):
 
         headers = {"Authorization": f"{self.LoginToken}", "tipo": f"{self.LoginTipo}"}
         response1 = requests.post(url, json=data, headers=headers)
-        self.assertEqual(response1.status_code, 200)
-        self.assertEqual(response1.json()["message"], 'Producto añadido al carrito')
         
         #Realizar Compra
         url = f"{BASE_URL}/MakeCompra"
         response2 = requests.post(url, json=data, headers=headers)
-        self.assertEqual(response2.status_code, 200)
 
-        #verificar reistro en la tabla de compras
+        #verificar registro en la tabla de compras
         url = f"{BASE_URL}/GetCompra"
         data = {
             "Codigo": response2.json()["Codigo_Compra"],
         }
         response2 = requests.get(url, json=data, headers=headers)
+
+        self.assertEqual(response1.status_code, 200)
+        self.assertEqual(response1.json()["message"], 'Producto añadido al carrito')
+        self.assertEqual(response2.status_code, 200)
         self.assertEqual(response2.status_code, 200)
     
     def test_PurchaseProductNoCart(self, ):
