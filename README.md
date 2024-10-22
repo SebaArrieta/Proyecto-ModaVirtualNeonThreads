@@ -33,12 +33,12 @@ Las condiciones de cada prueba, como el tener un usuario autenticado, se estruct
 
 # Procedimiento de ejecución de pruebas
 
-Para la ejecucion de las pruebas se utilizaron extensiones del visual studio code que en conjunto con la herramienta proporcionaba un entorno junto con una interfaz para la ejecucion y visualizacion de los resultados de las pruebas.
+Para la ejecución de las pruebas, se utilizaron extensiones de Visual Studio Code, las cuales proporcionan un entorno cómodo y eficiente, junto con una interfaz visual para la ejecución y visualización de los resultados. Estas herramientas permiten realizar las pruebas de manera rápida e intuitiva dentro del propio IDE.
 
 Imagen de la interfaz de Visual Studio Code
 ![image](https://github.com/user-attachments/assets/f49f9428-f143-4597-b415-a30d5001b7b9)
 
-De igual forma tambien pueden ejecutarse las pruebas con el siguiente comando de ejecución de python
+Alternativamente, las pruebas también pueden ejecutarse desde la terminal utilizando el siguiente comando de Python
 
 `python -m unittest test_example.py`
 
