@@ -27,7 +27,7 @@ exports.AddCart = async (req, res) => {
                     console.error('Error al actualizar el carrito:', err);
                     return res.status(500).json({ error: 'Error al actualizar el carrito' });
                 }
-                return res.json({ message: 'Cantidad actualizada con éxito' });
+                return res.status(200).json({ message: 'Cantidad actualizada con éxito', results: results});
             });
         } else {
             // Si no existe, realiza la inserción
@@ -39,7 +39,7 @@ exports.AddCart = async (req, res) => {
                     console.error('Error al insertar en el carrito:', err);
                     return res.status(500).json({ error: 'Error al insertar en el carrito' });
                 }
-                return res.json({ message: 'Producto añadido al carrito' });
+                return res.status(200).json({ message: 'Producto añadido al carrito', results: results });
             });
         }
     });
@@ -94,6 +94,7 @@ exports.DeleteCart = async (req, res) => {
             return res.status(500).json({ error: 'Error en la consulta' });
         }
 
+        console.log(results)
         return res.json(results)
     });
 }
