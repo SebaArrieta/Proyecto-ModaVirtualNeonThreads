@@ -29,11 +29,30 @@ Las pruebas unitarias se desarrollan en un entorno independiente de la aplicaci�
 
 Cada uno de los archivos que contienen las pruebas se encargan de realizar un proceso de testing de las funcionalidades mas importantes de los principales modulos de la aplicación, estos modulos probados son los de usuarios, compra y productos.
 
-Las condiciones de cada prueba se estructuran de manera automatica antes de iniciar con el proceso y cuando este termina se eliminan todo nuevo registro en la base de datos a utilizar en las pruebas para dejar al sistema en el estado anterior al testing de las componentes.
+Las condiciones de cada prueba, como el tener un usuario autenticado, se estructuran de manera automatica antes de iniciar con el proceso y cuando este termina se eliminan todo nuevo registro en la base de datos a utilizar en las pruebas para dejar al sistema en el estado anterior al testing de las componentes.
 
 ### Pruebas del modulo de compra:
 
-1. 
+Prueba 1.1
+Descripción: Añadir un nuevo producto al carrito virtual del usuario, este producto tambien sera eliminado del carrito al finalizar la prueba.
+Entradas: Credenciales del usuario creado para las pruebas, id del producto a agregar y  cantidad a agregar.
+Salida esperada: una respuesta con estatus 200 y un mensaje del tipo "Producto añadido al carrito"
+Salida Obtenida por el Unittesting: test_AddCartNewProduct (Compra_test.TestCompra.test_AddCartNewProduct) ... ok 
+
+Prueba 1.2
+Descripción: Añadir un nuevo producto al carrito virtual del usuario con una cantidad igual a 0.
+Entradas: Credenciales del usuario creado para las pruebas, id del producto a agregar y  cantidad a agregar igual a 0.
+Salida esperada: una respuesta con estatus 500 y un mensaje del tipo "Cantidad del producto es 0"
+Salida Obtenida por el Unittesting: test_AddCart0Quantity (Compra_test.TestCompra.test_AddCart0Quantity) ... FAIL
+                                    (AssertionError: 200 != 500)
+Prueba 1.3
+Descripción: Añadir un nuevo producto al carrito virtual del usuario con una cantidad igual a 0.
+Entradas: Credenciales del usuario creado para las pruebas, id del producto a agregar y  cantidad a agregar igual a 0.
+Salida esperada: una respuesta con estatus 500 y un mensaje del tipo "Cantidad del producto es 0"
+Salida Obtenida por el Unittesting: test_AddCart0Quantity (Compra_test.TestCompra.test_AddCart0Quantity) ... FAIL
+                                    (AssertionError: 200 != 500)
+
+
 
 ## 4. Dependencias entre la Herramienta y la Aplicación
 
