@@ -72,7 +72,7 @@ Ademas en etapas tempranas del proyecto realizamos diseños iniciales de como pr
 ![image](https://github.com/user-attachments/assets/6286cd7f-f1c8-44e1-98a5-1b5e35f49106)
 
 ## Especificar dependencias entre la herramienta y la aplicación
-La infraestructura del proyecto consiste en un front-end desarrollado con React que se comunica con un servidor en el Back-end de la aplicación realizado con Node.js, de igual forma, para el almacenamiento de recursos y bases de datos se utilizaron servicios de aws como RDS o Buckets S3, las credenciales están disponibles en el archivo. env para propósitos de la entrega aunque estas deberían ser privadas.
+La infraestructura del proyecto consiste en un front-end desarrollado con React que se comunica con un servidor en el Back-end de la aplicación realizado con Node.js, de igual forma, para el almacenamiento de recursos y bases de datos se utilizaron servicios de aws como RDS o Buckets S3.
 
 Las pruebas unitarias se desarrollan en un entorno independiente de la aplicación, estas consisten principalmente en probar los distintos resultados obtenidos de los endpoints del servidor en Node.js, no existen dependencias adicionales entre la aplicación y las pruebas excepto de que la aplicación debe estar ejecutándose localmente para ser accedida desde los enlaces del localhost y además la instancia de RDS debe estar ejecutándose.
 
