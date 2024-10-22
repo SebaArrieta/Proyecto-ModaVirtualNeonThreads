@@ -37,11 +37,10 @@ Asegúrate de que te encuentras en la **región de São Paulo**, como se muestra
 
 Una vez que la base de datos esté activa, puedes proceder a ejecutar el programa y las pruebas unitarias utilizando los siguientes comandos en la terminal:
 
-`make run` ejecuta el programa
-`make compra_test` ejecuta las pruebas del modulo de compra
-`make usuario_test` ejecuta las pruebas del modulo de usuarios
-`make producto_test` ejecuta las pruebas del modulo de productos
-
+- `make run` ejecuta el programa
+- `make compra_test` ejecuta las pruebas del modulo de compra
+- `make usuario_test` ejecuta las pruebas del modulo de usuarios
+- `make producto_test` ejecuta las pruebas del modulo de productos
 
 ## 1. Alcances de la Herramienta
 
