@@ -31,45 +31,62 @@ Cada uno de los archivos que contienen las pruebas se encargan de realizar un pr
 
 Las condiciones de cada prueba, como el tener un usuario autenticado, se estructuran de manera automatica antes de iniciar con el proceso y cuando este termina se eliminan todo nuevo registro en la base de datos a utilizar en las pruebas para dejar al sistema en el estado anterior al testing de las componentes.
 
-### Pruebas del modulo de compra:
+# Pruebas de Carrito de Compras
 
-Prueba 1.1
-Descripción: Añadir un nuevo producto al carrito virtual del usuario, este producto tambien sera eliminado del carrito al finalizar la prueba.
-Entradas: Credenciales del usuario creado para las pruebas, id del producto a agregar y  cantidad a agregar.
-Salida esperada: una respuesta con estatus 200 y un mensaje del tipo "Producto añadido al carrito"
-Salida Obtenida por el Unittesting: test_AddCartNewProduct (Compra_test.TestCompra.test_AddCartNewProduct) ... ok 
+## Prueba 1.1: Añadir un nuevo producto al carrito
 
-Prueba 1.2
-Descripción: Añadir un nuevo producto al carrito virtual del usuario con una cantidad igual a 0.
-Entradas: Credenciales del usuario creado para las pruebas, id del producto a agregar y  cantidad a agregar igual a 0.
-Salida esperada: una respuesta con estatus 500 y un mensaje del tipo "Cantidad del producto es 0"
-Salida Obtenida por el Unittesting: test_AddCart0Quantity (Compra_test.TestCompra.test_AddCart0Quantity) ... FAIL
-                                    (AssertionError: 200 != 500)
+- **Descripción**: Añadir un nuevo producto al carrito virtual del usuario. Este producto será eliminado del carrito al finalizar la prueba.
+- **Entradas**: Credenciales del usuario creado para las pruebas, ID del producto a agregar y cantidad a agregar.
+- **Salida esperada**: Una respuesta con estatus 200 y un mensaje del tipo "Producto añadido al carrito".
+- **Salida obtenida**: `test_AddCartNewProduct (Compra_test.TestCompra.test_AddCartNewProduct)` ... **OK**.
 
-Prueba 1.3
-Descripción: Actualizar la cantidad de un producto ya añadido al carrito.
-Entradas: Credenciales del usuario creado para las pruebas, id del producto a actualizar y cantidad a agregar igual a 1.
-Salida esperada: una respuesta con estatus 200 y que la cantidad actualizada sea igual a 3"
-Salida Obtenida por el Unittesting: test_UpdateCartNewProduct (Compra_test.TestCompra.test_UpdateCartNewProduct) ... ok
+---
 
-Prueba 1.4
-Descripción: Modificar la cantidad de un producto en el carrito virtual.
-Entradas: Credenciales del usuario creado para las pruebas, id del producto a actualizar y cantidad a modificar del carrito pase de 3 a 7.
-Salida esperada: una respuesta con estatus 200 en cada uno de los procedimientos realizados"
-Salida Obtenida por el Unittesting: test_AddCartModifyProduct (Compra_test.TestCompra.test_AddCartModifyProduct) ... ok
+## Prueba 1.2: Añadir un producto con cantidad igual a 0
 
-Prueba 1.5
-Descripción: Probar la compra de un producto, primero se añade un producto al carrito luego se realiza la compra y se verifica de que haya sido añadido a la tabla de compras.
-Entradas: Credenciales del usuario creado para las pruebas, id y cantidad del producto a agregar al carrito.
-Salida esperada: una respuesta con estatus 200 y que la cantidad actualizada sea igual a 7"
-Salida Obtenida por el Unittesting: test_PurchaseProduct (Compra_test.TestCompra.test_PurchaseProduct) ... ok
+- **Descripción**: Añadir un nuevo producto al carrito virtual del usuario con una cantidad igual a 0.
+- **Entradas**: Credenciales del usuario creado para las pruebas, ID del producto a agregar y cantidad igual a 0.
+- **Salida esperada**: Una respuesta con estatus 500 y un mensaje del tipo "Cantidad del producto es 0".
+- **Salida obtenida**: `test_AddCart0Quantity (Compra_test.TestCompra.test_AddCart0Quantity)` ... **FAIL**.
+  - **Error**: AssertionError: 200 != 500.
 
-Prueba 1.6
-Descripción: Realizar una compra sin productos en el carrito.
-Entradas: Credenciales del usuario creado para las pruebas.
-Salida esperada: una respuesta con estatus 500 y un mensaje del tipo "No existen productos en el carrito"
-Salida Obtenida por el Unittesting: test_PurchaseProductNoCart (Compra_test.TestCompra.test_PurchaseProductNoCart) ... FAIL
-                                    AssertionError: 200 != 500
+---
+
+## Prueba 1.3: Actualizar cantidad de producto en el carrito
+
+- **Descripción**: Actualizar la cantidad de un producto ya añadido al carrito.
+- **Entradas**: Credenciales del usuario creado para las pruebas, ID del producto a actualizar y cantidad igual a 1.
+- **Salida esperada**: Una respuesta con estatus 200 y que la cantidad actualizada sea igual a 3.
+- **Salida obtenida**: `test_UpdateCartNewProduct (Compra_test.TestCompra.test_UpdateCartNewProduct)` ... **OK**.
+
+---
+
+## Prueba 1.4: Modificar cantidad de producto en el carrito
+
+- **Descripción**: Modificar la cantidad de un producto en el carrito virtual.
+- **Entradas**: Credenciales del usuario creado para las pruebas, ID del producto a actualizar, pasando la cantidad de 3 a 7.
+- **Salida esperada**: Una respuesta con estatus 200 en cada procedimiento realizado.
+- **Salida obtenida**: `test_AddCartModifyProduct (Compra_test.TestCompra.test_AddCartModifyProduct)` ... **OK**.
+
+---
+
+## Prueba 1.5: Probar compra de un producto
+
+- **Descripción**: Añadir un producto al carrito, luego realizar la compra y verificar que se haya añadido a la tabla de compras.
+- **Entradas**: Credenciales del usuario creado para las pruebas, ID y cantidad del producto a agregar al carrito.
+- **Salida esperada**: Una respuesta con estatus 200 y que la cantidad actualizada sea igual a 7.
+- **Salida obtenida**: `test_PurchaseProduct (Compra_test.TestCompra.test_PurchaseProduct)` ... **OK**.
+
+---
+
+## Prueba 1.6: Realizar una compra sin productos en el carrito
+
+- **Descripción**: Realizar una compra sin productos en el carrito.
+- **Entradas**: Credenciales del usuario creado para las pruebas.
+- **Salida esperada**: Una respuesta con estatus 500 y un mensaje del tipo "No existen productos en el carrito".
+- **Salida obtenida**: `test_PurchaseProductNoCart (Compra_test.TestCompra.test_PurchaseProductNoCart)` ... **FAIL**.
+  - **Error**: AssertionError: 200 != 500.
+
 
 
 ## 4. Dependencias entre la Herramienta y la Aplicación
