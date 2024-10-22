@@ -29,7 +29,9 @@ Las pruebas unitarias se desarrollan en un entorno independiente de la aplicaci√
 
 Cada uno de los archivos que contienen las pruebas se encargan de realizar un proceso de testing de las funcionalidades mas importantes de los principales modulos de la aplicaci√≥n, estos modulos probados son los de usuarios, compra y productos.
 
-Pruebas del modulo de compra:
+Las condiciones de cada prueba se estructuran de manera automatica antes de iniciar con el proceso y cuando este termina se eliminan todo nuevo registro en la base de datos a utilizar en las pruebas para dejar al sistema en el estado anterior al testing de las componentes.
+
+### Pruebas del modulo de compra:
 
 1. 
 
