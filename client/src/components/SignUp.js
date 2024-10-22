@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Loading from './Loading';
+import ErrorMessage from './ErrorMessage';
 
 const SignUp = () => {
     const [loading, setLoading] = useState(false)
@@ -51,15 +52,18 @@ const SignUp = () => {
             
         } catch (error) {
             console.error("Error al enviar el formulario:", error);
-            if (error.response) {
-                setErrors(error.response.data);
-            } 
+            setErrors(error.response?.data || "Ocurrio un error");
             setLoading(false)
         }
     };
 
+    const hideError = async () => {
+        setErrors({})
+    }
+
     return (
         <div className="container">
+            {typeof errors === 'string' && <ErrorMessage message={errors} onClose={hideError}/>}
             {loading ? (
                 <Loading message = {loadingMessage}/>
             ) : (

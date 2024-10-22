@@ -9,6 +9,6 @@ app.use(express.json());
 app.use(cors());
 app.use(require("./Routes/routes"));
 
-app.listen(app.get("port"), ()=>{
+app.listen(app.get("port"), async ()=>{
     console.log(`Servidor en el puerto ${app.get("port")}`)
 })
