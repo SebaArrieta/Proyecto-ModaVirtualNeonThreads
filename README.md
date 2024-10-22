@@ -7,7 +7,9 @@ Para ejecutar el proyecto, es necesario iniciar la instancia RDS en AWS. Sigue e
 
 ### a) Ingreso con credenciales IAM
 
-Utiliza las siguientes credenciales para acceder a la consola de AWS:
+Utiliza las siguientes credenciales para acceder a la consola de AWS desde el siguiente enlace:
+
+https://533267310060.signin.aws.amazon.com/console
 
 - **Usuario IAM**: `ProyectoIAM`
 - **Contraseña**: `ProyectoEquipo9`
