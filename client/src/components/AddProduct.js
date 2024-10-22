@@ -6,7 +6,10 @@ const AddProduct = () => {
         Nombre: '',
         Descripcion: '',
         Precio: '',
+        Categoria: '',
+        Color: '',
         Imagen: null,
+
     });
 
     const [message, setMessage] = useState('');
@@ -14,14 +17,17 @@ const AddProduct = () => {
     // Handle input change for text fields (Nombre, Descripcion, Precio)
     const handleChange = (e) => {
         const { name, value } = e.target;
+        console.log(name, value)
         setProductData({
             ...productData,
             [name]: value,
+            
         });
     };
 
     // Handle image file change
     const handleImageChange = (e) => {
+        console.log(e.target.files[0]); // Log the selected image file
         setProductData({
             ...productData,
             Imagen: e.target.files[0], // Append the image file
@@ -46,6 +52,13 @@ const AddProduct = () => {
         formData.append('Descripcion', productData.Descripcion);
         formData.append('Precio', productData.Precio);
         formData.append('Imagen', productData.Imagen); // Append image file
+        formData.append('Categoria', productData.Categoria); 
+        formData.append('Color', productData.Color); 
+
+
+        for (let [key, value] of formData.entries()) {
+            console.log(`${key}: ${value}`);
+        }
 
         console.log("FormData created");
 
@@ -113,6 +126,28 @@ const AddProduct = () => {
                         className="form-control"
                         name="Imagen"
                         onChange={handleImageChange}
+                        required
+                    />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Categoría</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        name="Categoria"
+                        value={productData.Categoria}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Color</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        name="Color"
+                        value={productData.Color}
+                        onChange={handleChange}
                         required
                     />
                 </div>

@@ -23,26 +23,28 @@ const UploadImg = async (fileName, imageBuffer) => {
 }
 
 exports.AddProduct = [
+    
     upload.single('Imagen'), // Multer middleware to handle image upload
+    
     async (req, res) => {
         try {
             // Get form data from request body
-            const { Nombre, Descripcion, Precio } = req.body;
+            const { Nombre, Descripcion, Precio, Categoria, Color } = req.body;
             const { buffer } = req.file; // Image file is now available in req.file
-
-            if (!Nombre || !Descripcion || !Precio || !buffer) {
+            console.log("hola");
+            if (!Nombre || !Descripcion || !Precio || !buffer || !Categoria || !Color) {
                 return res.status(400).json({ error: 'Missing product data or image' });
             }
-
+            console.log("hola2");
             // Generate a unique filename for the image
             const uniqueFileName = `${uuidv4()}.jpg`;
-
+            console.log("hola3");
             // Upload the image to S3
             await UploadImg(uniqueFileName, buffer);
-
+            console.log("hola4");
             // Insert product details into the database
-            const query = 'INSERT INTO Productos (Nombre, Descripcion, Precio, Imagen) VALUES (?, ?, ?, ?)';
-            const values = [Nombre, Descripcion, Precio, uniqueFileName];
+            const query = 'INSERT INTO Productos (Nombre, Descripcion, Precio, Imagen, Categoria, Color) VALUES (?, ?, ?, ?, ?, ?)';
+            const values = [Nombre, Descripcion, Precio, uniqueFileName, Categoria, Color];
 
             await queryPromise(query, values);
 
