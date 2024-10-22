@@ -1,4 +1,26 @@
 # Documentación del Proyecto
+#Guia de instalación
+
+Para ejecutar el proyecto es necesario iniciar la instancia RDS en aws. Para esto es necesario ingresar con el siguiente usuario IAM
+
+Usuario: ProyectoIAM
+Contraseña: ProyectoEquipo9
+
+Luego buscar RDS en el buscador como se muestra a continuación y dirigirse a la sección de bases de datos disponible en el panel izquierdo.
+![image](https://github.com/user-attachments/assets/447b7d17-064b-43aa-88dc-8c515f8c8456)
+
+Asegurarse de que se encuentra en la region de sao paulo
+![image](https://github.com/user-attachments/assets/bd8cfcbe-afde-4271-8891-13ab8db508f2)
+
+Seleccionar la base de datos y en acciones dar click en "comenzar", el proceso de inicio puede tardar unos minutos
+![image](https://github.com/user-attachments/assets/31518e8d-6d32-4824-be7d-46a6cbb5e2f0)
+
+Una vez iniciada la base de datos para ejecutar el programa se utilizan los siguientes comandos.
+`make run` ejecuta el programa
+`make compra_test` ejecuta las pruebas del modulo de compra
+`make usuario_test` ejecuta las pruebas del modulo de usuarios
+`make producto_test` ejecuta las pruebas del modulo de productos
+
 
 ## 1. Alcances de la Herramienta
 
