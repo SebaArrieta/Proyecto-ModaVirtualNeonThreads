@@ -45,13 +45,31 @@ Entradas: Credenciales del usuario creado para las pruebas, id del producto a ag
 Salida esperada: una respuesta con estatus 500 y un mensaje del tipo "Cantidad del producto es 0"
 Salida Obtenida por el Unittesting: test_AddCart0Quantity (Compra_test.TestCompra.test_AddCart0Quantity) ... FAIL
                                     (AssertionError: 200 != 500)
-Prueba 1.3
-Descripción: Añadir un nuevo producto al carrito virtual del usuario con una cantidad igual a 0.
-Entradas: Credenciales del usuario creado para las pruebas, id del producto a agregar y  cantidad a agregar igual a 0.
-Salida esperada: una respuesta con estatus 500 y un mensaje del tipo "Cantidad del producto es 0"
-Salida Obtenida por el Unittesting: test_AddCart0Quantity (Compra_test.TestCompra.test_AddCart0Quantity) ... FAIL
-                                    (AssertionError: 200 != 500)
 
+Prueba 1.3
+Descripción: Actualizar la cantidad de un producto ya añadido al carrito.
+Entradas: Credenciales del usuario creado para las pruebas, id del producto a actualizar y cantidad a agregar igual a 1.
+Salida esperada: una respuesta con estatus 200 y que la cantidad actualizada sea igual a 3"
+Salida Obtenida por el Unittesting: test_UpdateCartNewProduct (Compra_test.TestCompra.test_UpdateCartNewProduct) ... ok
+
+Prueba 1.4
+Descripción: Modificar la cantidad de un producto en el carrito virtual.
+Entradas: Credenciales del usuario creado para las pruebas, id del producto a actualizar y cantidad a modificar del carrito pase de 3 a 7.
+Salida esperada: una respuesta con estatus 200 en cada uno de los procedimientos realizados"
+Salida Obtenida por el Unittesting: test_AddCartModifyProduct (Compra_test.TestCompra.test_AddCartModifyProduct) ... ok
+
+Prueba 1.5
+Descripción: Probar la compra de un producto, primero se añade un producto al carrito luego se realiza la compra y se verifica de que haya sido añadido a la tabla de compras.
+Entradas: Credenciales del usuario creado para las pruebas, id y cantidad del producto a agregar al carrito.
+Salida esperada: una respuesta con estatus 200 y que la cantidad actualizada sea igual a 7"
+Salida Obtenida por el Unittesting: test_PurchaseProduct (Compra_test.TestCompra.test_PurchaseProduct) ... ok
+
+Prueba 1.6
+Descripción: Realizar una compra sin productos en el carrito.
+Entradas: Credenciales del usuario creado para las pruebas.
+Salida esperada: una respuesta con estatus 500 y un mensaje del tipo "No existen productos en el carrito"
+Salida Obtenida por el Unittesting: test_PurchaseProductNoCart (Compra_test.TestCompra.test_PurchaseProductNoCart) ... FAIL
+                                    AssertionError: 200 != 500
 
 
 ## 4. Dependencias entre la Herramienta y la Aplicación
