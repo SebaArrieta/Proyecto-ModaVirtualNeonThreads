@@ -16,6 +16,11 @@ RUN mkdir -p /usr/lib/docker/cli-plugins && \
 # Add Jenkins user to the Docker group to allow running Docker commands
 RUN usermod -aG docker jenkins
 
+RUN apt-get update && apt-get install -y \
+    python3 \
+    python3-pip
+
+# Install the required Python packages
 RUN pip3 install requests
 
 USER jenkins
