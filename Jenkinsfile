@@ -109,19 +109,9 @@ pipeline {
         }
         success {
             echo 'Despliegue y pruebas exitosas'
-            slackSend (
-                channel: '#proyecto',
-                message: "Despliegue y pruebas exitosas",
-                tokenCredentialId: 'https://hooks.slack.com/services/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'
-            )
         }
         failure {
             echo 'Pipeline fallido, el despliegue no se realizó'
-            slackSend (
-                channel: '#proyecto',
-                message: "Pipeline fallido, el despliegue no se realizó",
-                tokenCredentialId: 'https://hooks.slack.com/services/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'
-            )
         }
     }
 }
