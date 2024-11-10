@@ -22,6 +22,7 @@ pipeline {
                             env.AWS_SECRET_ACCESS_KEY = envVars.find { it.startsWith('AWS_SECRET_ACCESS_KEY=') }?.split('=')[1]
                             env.AWS_REGION = envVars.find { it.startsWith('AWS_REGION=') }?.split('=')[1]
                             env.TEST_URL = "http://host.docker.internal:5000"
+                            env.GITHUB_TOKEN = envVars.find { it.startsWith('GITHUB_TOKEN=') }?.split('=')[1]
                         }
                     } else {
                         error ".env file not found!"
