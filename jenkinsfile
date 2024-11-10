@@ -3,7 +3,9 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'develop', url: 'https://github.com/tu_usuario/tu_repositorio.git'
+                git branch: 'develop',
+                    url: 'https://github.com/INF331-Equipo9/Proyecto-ModaVirtualNeonThreads.git',
+                    credentialsId: 'github-pat'
             }
         }
         stage('Build and Run Application') {
