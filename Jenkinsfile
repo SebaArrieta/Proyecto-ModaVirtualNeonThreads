@@ -3,20 +3,21 @@ pipeline {
     stages {
         stage('Use Environment Variables') {
             steps {
-                // Use bash to source the .env file
                 sh '''
                     if [ -f /var/jenkins_home/.env ]; then
+                        echo "Sourcing .env file..."
                         set -a
-                        bash -c "source /var/jenkins_home/.env"
+                        . /var/jenkins_home/.env
                         set +a
+                        echo "Environment Variables Loaded:"
+                        echo "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID"
+                        echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY"
+                        echo "AWS_REGION=$AWS_REGION"
                     else
                         echo ".env file not found!"
+                        exit 1
                     fi
                 '''
-                // Echo the variables to confirm they're loaded
-                sh 'echo AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID'
-                sh 'echo AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY'
-                sh 'echo AWS_REGION=$AWS_REGION'
             }
         }
         stage('Checkout') {
