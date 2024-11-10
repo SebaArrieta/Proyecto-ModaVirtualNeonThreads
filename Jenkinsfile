@@ -80,7 +80,7 @@ pipeline {
                       
                         git merge develop -m "Merging develop into main via Jenkins pipeline" --allow-unrelated-histories
 
-                        # Check for merge conflicts
+                        # Check for merge conflict
                         if [[ -n "$(git ls-files -u)" ]]; then
                             echo "Merge conflict detected. Resolving automatically..."
                             git merge --abort
