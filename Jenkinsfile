@@ -7,23 +7,16 @@ pipeline {
                     def envFile = '/var/jenkins_home/.env'
                     if (fileExists(envFile)) {
                         echo "Sourcing .env file..."
-                        sh """
-                            set -a
-                            . ${envFile}
-                            set +a
-                        """
-                        // Load environment variables from the .env file
-                        def lines = readFile(envFile).split('\n')
-                        lines.each { line ->
+                        def envVars = readFile(envFile).split('\n').collect { line ->
                             if (line.contains('=')) {
-                                def (key, value) = line.split('=').collect { it.trim() }
-                                env[key] = value
+                                return line.trim()
                             }
-                        }
+                        }.findAll { it }
                         echo "Environment Variables Loaded:"
-                        echo "AWS_ACCESS_KEY_ID=${env.AWS_ACCESS_KEY_ID}"
-                        echo "AWS_SECRET_ACCESS_KEY=${env.AWS_SECRET_ACCESS_KEY}"
-                        echo "AWS_REGION=${env.AWS_REGION}"
+                        envVars.each { echo it }
+                        withEnv(envVars) {
+                            // Propagate the environment variables to subsequent stages
+                        }
                     } else {
                         error ".env file not found!"
                     }
