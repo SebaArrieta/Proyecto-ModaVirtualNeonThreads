@@ -3,6 +3,10 @@ const db = require('../Database/index');
 exports.AddCart = async (req, res) => {
     const data = req.body;
 
+    if(data["Cantidad"] <= 0){
+        return res.status(500).json({ error: 'Cantidad del producto es 0' });
+    }
+
     const checkQuery = `
         SELECT Cantidad 
         FROM Carrito 
@@ -150,6 +154,8 @@ exports.MakeCompra = async (req, res) => {
         if (results.length > 0) {// error de productos sin stock
             const productNames = results.map(result => result.Nombre).join(', ');
             return res.status(400).json({ error: `Los siguientes productos no tienen suficiente stock: ${productNames}` });
+        }else if(results.length == 0){
+            return res.status(500).json({ error: "No existen productos en el carrito" });
         }
 
         // Generar Codigo_Compra unico
@@ -161,7 +167,7 @@ exports.MakeCompra = async (req, res) => {
 
             db.query(queryCompra, (err, results) => {
                 if (err) {
-                    console.error('Error enla compra', err);
+                    console.error('Error en la compra', err);
                     return res.status(500).json({ error: 'Error en la compra' });
                 }
 
