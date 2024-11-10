@@ -34,8 +34,12 @@ pipeline {
         }
         stage('Build and Run Application') {
             steps {
-                // Usa el objetivo `run` del Makefile para construir y levantar los contenedores
-                sh 'make run'
+                sh '''
+                    export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+                    export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+                    export AWS_REGION=$AWS_REGION
+                    make run
+                '''
             }
         }
         stage('Run Unit Tests') {
