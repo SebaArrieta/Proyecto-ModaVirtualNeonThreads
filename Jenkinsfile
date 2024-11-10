@@ -73,13 +73,13 @@ pipeline {
                     echo 'Merging develop into main...'
 
                     sh '''
-                        # Checkout main branch
+                        git config user.email "sebatian.arrieta@usm.cl"
+                        git config user.name "SebasArrieta"
+                       
                         git checkout main
-
-                        # Merge develop into main
+                      
                         git merge develop -m "Merging develop into main via Jenkins pipeline" --allow-unrelated-histories
 
-                        # Push changes to the remote repository
                         git push origin main
                     '''
 
