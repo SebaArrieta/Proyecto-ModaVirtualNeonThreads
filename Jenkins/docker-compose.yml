@@ -18,6 +18,9 @@ services:
       sh -c "/usr/bin/tini -- /usr/local/bin/jenkins.sh"
     environment:
       - JENKINS_OPTS=--httpPort=8080
+      - AWS_ACCESS_KEY_ID:=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY:=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION:=${AWS_REGION}
 
   Ngrok-service:
     image: wernight/ngrok
