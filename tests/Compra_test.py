@@ -1,7 +1,8 @@
 import unittest
 import requests
+import os
 
-BASE_URL = 'http://localhost:5000' 
+BASE_URL = os.environ.get("TEST_URL", "http://localhost:5000") 
 
 class TestCompra(unittest.TestCase):
 
