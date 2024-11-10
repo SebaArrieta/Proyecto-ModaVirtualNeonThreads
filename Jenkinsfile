@@ -77,7 +77,7 @@ pipeline {
                         git checkout main
 
                         # Merge develop into main
-                        git merge develop -m "Merging develop into main via Jenkins pipeline"
+                        git merge develop -m "Merging develop into main via Jenkins pipeline" --allow-unrelated-histories
 
                         # Push changes to the remote repository
                         git push origin main
