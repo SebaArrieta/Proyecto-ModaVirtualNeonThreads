@@ -78,8 +78,6 @@ pipeline {
                         git config user.name "SebasArrieta"
                        
                         git checkout main
-
-                        git pull origin main --rebase
                       
                         git merge develop -m "Merging develop into main via Jenkins" --allow-unrelated-histories -X theirs
 
