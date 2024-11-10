@@ -48,6 +48,13 @@ pipeline {
                     echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY"
                     echo "AWS_REGION=$AWS_REGION"
                     make run
+
+                    echo "Waiting for server to start..."
+                    for i in {1..10}; do
+                        nc -z localhost 5000 && break
+                        echo "Waiting for localhost:5000..."
+                        sleep 5
+                    done
                 '''
             }
         }
