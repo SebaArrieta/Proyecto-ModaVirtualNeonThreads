@@ -48,20 +48,21 @@ pipeline {
                     echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY"
                     echo "AWS_REGION=$AWS_REGION"
                     make run
-
-                    echo "Waiting for server to start..."
-                    for i in {1..10}; do
-                        nc -z localhost 5000 && break
-                        echo "Waiting for localhost:5000..."
-                        sleep 5
-                    done
                 '''
             }
         }
         stage('Run Unit Tests') {
             steps {
                 // Usa el objetivo `Compra_test` del Makefile para ejecutar las pruebas unitarias
-                sh 'make Compra_test'
+                sh '''
+                    echo "Waiting for server to start..."
+                    for i in {1..10}; do
+                        nc -z localhost 5000 && break
+                        echo "Waiting for localhost:5000..."
+                        sleep 5
+                    done
+                    make Compra_test
+                '''
             }
         }
         stage('Deploy') {
