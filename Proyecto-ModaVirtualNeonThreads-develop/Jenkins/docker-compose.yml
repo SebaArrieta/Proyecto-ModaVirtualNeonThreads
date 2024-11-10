@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  jenkins:
+    build:
+      context: .  # Directory where your Dockerfile is located
+      dockerfile: Dockerfile
+    container_name: jenkins
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - //var/run/docker.sock:/var/run/docker.sock
+      - ../.env:/var/jenkins_home/.env
+    user: root
+    entrypoint: >
+      sh -c "/usr/bin/tini -- /usr/local/bin/jenkins.sh"
+    environment:
+      JENKINS_OPTS: --httpPort=8080
+
+  ngrok:
+    image: wernight/ngrok
+    container_name: ngrok
+    environment:
+      - NGROK_AUTHTOKEN=2oS5SsWMyYcTcFImvHkft5NwHnm_4X4i8Zu73fHrCRxBsYpNA
+    command: ngrok http jenkins:8080  # Redirect to Jenkins in the container
+    ports:
+      - "4040:4040"
+
+volumes:
+  jenkins_home:
+    driver: local
