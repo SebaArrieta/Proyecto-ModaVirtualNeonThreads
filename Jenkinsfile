@@ -89,7 +89,7 @@ pipeline {
                             git commit -m "Resolved merge conflict in Jenkins pipeline"
                         fi
 
-                        git push origin main
+                        git push https://${GITHUB_TOKEN}@github.com/INF331-Equipo9/Proyecto-ModaVirtualNeonThreads.git main
                     '''
 
                     echo 'Merge completed successfully!'
