@@ -8,6 +8,11 @@ pipeline {
                     credentialsId: 'github-pat'
             }
         }
+        stage('Verify Workspace') {
+            steps {
+                sh 'pwd && ls -la'
+            }
+        }
         stage('Build and Run Application') {
             steps {
                 // Usa el objetivo `run` del Makefile para construir y levantar los contenedores
