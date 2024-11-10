@@ -2,7 +2,9 @@ version: '3.8'
 
 services:
   jenkins:
-    image: jenkins/jenkins:lts
+    build:
+      context: .  # Current directory where Dockerfile.jenkins is located
+      dockerfile: Dockerfile
     container_name: jenkins
     ports:
       - "8080:8080"
@@ -18,7 +20,7 @@ services:
     container_name: ngrok
     environment:
       - NGROK_AUTHTOKEN=2oS5SsWMyYcTcFImvHkft5NwHnm_4X4i8Zu73fHrCRxBsYpNA
-    command: ngrok http jenkins:8080  # Redirige a Jenkins en el contenedor jenkins
+    command: ngrok http jenkins:8080  # Redirect to Jenkins in the container
     ports:
       - "4040:4040"
 
