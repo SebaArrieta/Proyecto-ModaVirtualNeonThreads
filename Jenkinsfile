@@ -79,6 +79,7 @@ pipeline {
                        
                         git checkout main
 
+                        git rebase --abort || true
                         git pull origin main --rebase
                       
                         git merge develop -m "Merging develop into main via Jenkins" --allow-unrelated-histories -X theirs
