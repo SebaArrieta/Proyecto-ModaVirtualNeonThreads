@@ -79,7 +79,7 @@ pipeline {
     }
     post {
         always {
-            sh 'docker-compose down'
+            sh 'docker compose down'
         }
         success {
             echo 'Despliegue y pruebas exitosas'
