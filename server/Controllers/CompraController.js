@@ -4,7 +4,7 @@ exports.AddCart = async (req, res) => {
     const data = req.body;
 
     if(data["Cantidad"] <= 0){
-        return res.status(500).json({ error: 'Cantidad del producto es 0' });
+        return res.status(500).json({ error: 'Cantidad del producto invalido' });
     }
 
     const checkQuery = `
