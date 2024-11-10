@@ -78,6 +78,8 @@ pipeline {
                         git config user.name "SebasArrieta"
                        
                         git checkout main
+
+                        git pull origin main --rebase
                       
                         git merge develop -m "Merging develop into main via Jenkins" --allow-unrelated-histories -X theirs
 
@@ -92,7 +94,7 @@ pipeline {
                             git commit -m "Resolved merge conflict in Jenkins pipeline"
                         fi
 
-                        git push https://${GITHUB_TOKEN}@github.com/INF331-Equipo9/Proyecto-ModaVirtualNeonThreads.git main
+                        git push https://${GITHUB_TOKEN}@github.com/INF331-Equipo9/Proyecto-ModaVirtualNeonThreads.git main --force
                     '''
 
                     echo 'Merge completed successfully!'
