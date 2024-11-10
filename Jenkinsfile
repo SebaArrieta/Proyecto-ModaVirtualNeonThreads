@@ -15,7 +15,12 @@ pipeline {
                         echo "Environment Variables Loaded:"
                         envVars.each { echo it }
                         withEnv(envVars) {
-                            // Propagate the environment variables to subsequent stages
+                            echo "Environment variables have been loaded."
+
+                            // Set them globally so they are available across all pipeline stages
+                            env.AWS_ACCESS_KEY_ID = envVars.find { it.startsWith('AWS_ACCESS_KEY_ID=') }?.split('=')[1]
+                            env.AWS_SECRET_ACCESS_KEY = envVars.find { it.startsWith('AWS_SECRET_ACCESS_KEY=') }?.split('=')[1]
+                            env.AWS_REGION = envVars.find { it.startsWith('AWS_REGION=') }?.split('=')[1]
                         }
                     } else {
                         error ".env file not found!"
