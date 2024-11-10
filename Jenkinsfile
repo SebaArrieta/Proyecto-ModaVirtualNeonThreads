@@ -68,9 +68,6 @@ pipeline {
             }
         }
         stage('Deploy') {
-            when {
-                branch 'develop'
-            }
             steps {
                 script {
                     echo 'Merging develop into main...'
