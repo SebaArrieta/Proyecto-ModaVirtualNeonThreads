@@ -3,21 +3,31 @@ pipeline {
     stages {
         stage('Use Environment Variables') {
             steps {
-                sh '''
-                    if [ -f /var/jenkins_home/.env ]; then
+                script {
+                    def envFile = '/var/jenkins_home/.env'
+                    if (fileExists(envFile)) {
                         echo "Sourcing .env file..."
-                        set -a
-                        . /var/jenkins_home/.env
-                        set +a
+                        sh """
+                            set -a
+                            . ${envFile}
+                            set +a
+                        """
+                        // Load environment variables from the .env file
+                        def lines = readFile(envFile).split('\n')
+                        lines.each { line ->
+                            if (line.contains('=')) {
+                                def (key, value) = line.split('=').collect { it.trim() }
+                                env[key] = value
+                            }
+                        }
                         echo "Environment Variables Loaded:"
-                        echo "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID"
-                        echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY"
-                        echo "AWS_REGION=$AWS_REGION"
-                    else
-                        echo ".env file not found!"
-                        exit 1
-                    fi
-                '''
+                        echo "AWS_ACCESS_KEY_ID=${env.AWS_ACCESS_KEY_ID}"
+                        echo "AWS_SECRET_ACCESS_KEY=${env.AWS_SECRET_ACCESS_KEY}"
+                        echo "AWS_REGION=${env.AWS_REGION}"
+                    } else {
+                        error ".env file not found!"
+                    }
+                }
             }
         }
         stage('Checkout') {
@@ -39,9 +49,6 @@ pipeline {
                     echo "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID"
                     echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY"
                     echo "AWS_REGION=$AWS_REGION"
-                    AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
-                    AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
-                    AWS_REGION=$AWS_REGION \
                     make run
                 '''
             }
