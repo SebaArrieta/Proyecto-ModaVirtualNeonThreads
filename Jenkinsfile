@@ -21,6 +21,7 @@ pipeline {
                             env.AWS_ACCESS_KEY_ID = envVars.find { it.startsWith('AWS_ACCESS_KEY_ID=') }?.split('=')[1]
                             env.AWS_SECRET_ACCESS_KEY = envVars.find { it.startsWith('AWS_SECRET_ACCESS_KEY=') }?.split('=')[1]
                             env.AWS_REGION = envVars.find { it.startsWith('AWS_REGION=') }?.split('=')[1]
+                            env.TEST_URL ? "http://host.docker.internal:5000"
                         }
                     } else {
                         error ".env file not found!"
@@ -47,6 +48,7 @@ pipeline {
                     echo "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID"
                     echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY"
                     echo "AWS_REGION=$AWS_REGION"
+                    echo "TEST_URL=$TEST_URL"
                     make run
                 '''
             }
