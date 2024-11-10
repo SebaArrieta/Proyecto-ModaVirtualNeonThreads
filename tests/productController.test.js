@@ -11,7 +11,7 @@ jest.mock('mysql2', () => ({
         callback(null, [{ id: 1, nombre: 'Producto 1' }]); // Ejemplo de respuesta
       }),
       end: jest.fn(),
-      // Añadimos un 'charset' específico para evitar codificación 'cesu8'
+      // Añadimos un 'charset' específico para evitar codificación 'ces
       charset: 'utf8',
     }),
   }));
