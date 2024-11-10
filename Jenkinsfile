@@ -3,9 +3,20 @@ pipeline {
     stages {
         stage('Use Environment Variables') {
             steps {
-                sh 'echo $AWS_ACCESS_KEY_ID'
-                sh 'echo $AWS_SECRET_ACCESS_KEY'
-                sh 'echo $AWS_REGION'
+                // Source the .env file to export its variables
+                sh '''
+                    if [ -f /var/jenkins_home/.env ]; then
+                        set -a
+                        source /var/jenkins_home/.env
+                        set +a
+                    else
+                        echo ".env file not found!"
+                    fi
+                '''
+                // Echo the variables to confirm they're loaded
+                sh 'echo AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID'
+                sh 'echo AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY'
+                sh 'echo AWS_REGION=$AWS_REGION'
             }
         }
         stage('Checkout') {
