@@ -154,8 +154,6 @@ exports.MakeCompra = async (req, res) => {
         if (results.length > 0) {// error de productos sin stock
             const productNames = results.map(result => result.Nombre).join(', ');
             return res.status(400).json({ error: `Los siguientes productos no tienen suficiente stock: ${productNames}` });
-        }else if(results.length == 0){
-            return res.status(500).json({ error: "No existen productos en el carrito" });
         }
 
         // Generar Codigo_Compra unico
