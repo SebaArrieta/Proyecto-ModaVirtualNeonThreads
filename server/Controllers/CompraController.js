@@ -166,7 +166,7 @@ exports.MakeCompra = async (req, res) => {
             db.query(queryCompra, (err, results) => {
                 if (err) {
                     console.error('Error en la compra', err);
-                    return res.status(500).json({ error: 'Error con la compra' });
+                    return res.status(500).json({ error: 'Error en la compra' });
                 }
 
                 return res.status(200).json({results: results, Codigo_Compra: uniqueCodigo});
