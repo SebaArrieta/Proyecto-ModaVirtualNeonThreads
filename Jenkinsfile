@@ -3,11 +3,11 @@ pipeline {
     stages {
         stage('Use Environment Variables') {
             steps {
-                // Source the .env file to export its variables
+                // Use bash to source the .env file
                 sh '''
                     if [ -f /var/jenkins_home/.env ]; then
                         set -a
-                        source /var/jenkins_home/.env
+                        bash -c "source /var/jenkins_home/.env"
                         set +a
                     else
                         echo ".env file not found!"
