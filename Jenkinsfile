@@ -78,7 +78,7 @@ pipeline {
                        
                         git checkout main
                       
-                        git merge develop -m "Merging develop into main via Jenkins pipeline" --allow-unrelated-histories
+                        git merge develop -m "Merging develop into main via Jenkins pipeline" --allow-unrelated-histories -X theirs
 
                         # Check for merge conflict
                         if [[ -n "$(git ls-files -u)" ]]; then
