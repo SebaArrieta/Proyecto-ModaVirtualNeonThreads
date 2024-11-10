@@ -72,8 +72,22 @@ pipeline {
                 branch 'develop'
             }
             steps {
-                echo 'Desplegando aplicación...'
-                // Agrega el comando o script de despliegue aquí
+                script {
+                    echo 'Merging develop into main...'
+
+                    sh '''
+                        # Checkout main branch
+                        git checkout main
+
+                        # Merge develop into main
+                        git merge develop -m "Merging develop into main via Jenkins pipeline"
+
+                        # Push changes to the remote repository
+                        git push origin main
+                    '''
+
+                    echo 'Merge completed successfully!'
+                }
             }
         }
     }
