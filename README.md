@@ -45,9 +45,13 @@ Una vez que la base de datos esté activa, puedes proceder a ejecutar el program
 - `make run` ejecuta el programa
 - `make Compra_test` ejecuta las pruebas del modulo de compra
 
+Desde la carpeta test puedes ejecutar `npm test` para las pruebas de ProductController
+
 # 1. Alcances de la Herramienta
 
 Este proyecto utiliza **unittest** como herramienta de pruebas unitarias para garantizar la calidad y el correcto funcionamiento de las funcionalidades desarrolladas. Unittest permite validar el comportamiento esperado de los diferentes módulos de la aplicación de manera aislada, detectando errores o desviaciones en las distintas etapas del desarrollo.
+
+Este proyecto también utiliza **Jest** como herramienta de pruebas unitarias para garantizar la calidad y el correcto funcionamiento de las funcionalidades desarrolladas. Jest permite validar el comportamiento esperado de los diferentes módulos de la aplicación de manera aislada, detectando errores o desviaciones en las distintas etapas del desarrollo.
 
 # 2. Descripción del Trabajo Realizado
 
@@ -95,6 +99,10 @@ Imagen de la interfaz de Visual Studio Code
 Alternativamente, las pruebas también pueden ejecutarse desde la terminal utilizando el siguiente comando de Python
 
 `python -m unittest test_example.py`
+
+De igual modo, desde la carpeta test las pruebas que utilizen jest pueden ejecutarse con el comando
+
+`npm test`
 
 ## Resultados: pruebas de Carrito de Compras
 
@@ -151,6 +159,26 @@ Alternativamente, las pruebas también pueden ejecutarse desde la terminal utili
 - **Salida esperada**: Una respuesta con estatus 500 y un mensaje del tipo "No existen productos en el carrito".
 - **Salida obtenida**: `test_PurchaseProductNoCart (Compra_test.TestCompra.test_PurchaseProductNoCart)` ... **FAIL**.
   - **Error**: AssertionError: 200 != 500.
+
+---
+
+### Prueba 1.7: Eliminar Producto
+- **Descripción**: Eliminar un producto de la base de datos.
+- **Entradas**: ID del producto a eliminar (en este caso, id: 1).
+- **Salida esperada**: Una respuesta con estatus 200 y un mensaje que indique que la eliminación fue exitosa.
+- **Salida obtenida**: test_DeleteProduct (Product_test.ProductController.test_DeleteProduct) ... PASS.
+  - **Resultado**: Se eliminó correctamente el producto con ID 1.
+
+---
+
+### Prueba 1.8: Obtener Stock de Producto
+- **Descripción**: Obtener el stock de un producto por su ID.
+- **Entradas**: ID del producto (en este caso, ProductosId: 1).
+- **Salida esperada**: Una respuesta con estatus 200 y un JSON con los detalles del stock (en este caso, Stock: 10, Tamaño: M).
+- **Salida obtenida**: test_GetStock (Product_test.ProductController.test_GetStock) ... PASS.
+  - **Resultado**: Se obtuvo correctamente el stock del producto con ID 1, con 10 unidades disponibles en tamaño M.
+  
+---
 
 # 4. Problemas encontrados y soluciones
 
