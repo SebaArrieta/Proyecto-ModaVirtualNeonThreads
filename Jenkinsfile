@@ -23,6 +23,7 @@ pipeline {
                             env.AWS_REGION = envVars.find { it.startsWith('AWS_REGION=') }?.split('=')[1]
                             env.TEST_URL = "http://host.docker.internal:5000"
                             env.GITHUB_TOKEN = envVars.find { it.startsWith('GITHUB_TOKEN=') }?.split('=')[1]
+                            env.SLACK_WEBHOOK_URL = envVars.find { it.startsWith('SLACK_WEBHOOK_URL=') }?.split('=')[1]
                         }
                     } else {
                         error ".env file not found!"
@@ -109,19 +110,19 @@ pipeline {
         }
         success {
             echo 'Despliegue y pruebas exitosas'
-            slackSend (
-                channel: '#proyecto',
-                message: "Despliegue y pruebas exitosas",
-                tokenCredentialId: 'slack-webhook'
-            )
+            sh '''
+            curl -X POST -H 'Content-type: application/json' \
+            --data '{"text":"Despliegue y pruebas exitosas"}' \
+            ${SLACK_WEBHOOK_URL}
+            '''
         }
         failure {
             echo 'Pipeline fallido, el despliegue no se realizó'
-            slackSend (
-                channel: '#proyecto',
-                message: "Pipeline fallido, el despliegue no se realizó",
-                tokenCredentialId: 'slack-webhook'
-            )
+            sh '''
+            curl -X POST -H 'Content-type: application/json' \
+            --data '{"text":"Pipeline fallido, el despliegue no se realizó"}' \
+            ${SLACK_WEBHOOK_URL}
+            '''
         }
     }
 }
