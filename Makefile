@@ -5,6 +5,3 @@ run:
 
 Compra_test:
 	python3 -m unittest ./tests/Compra_test.py
-
-Product_test:
-	npm test
