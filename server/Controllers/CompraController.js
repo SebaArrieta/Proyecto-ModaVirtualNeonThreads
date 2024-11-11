@@ -67,7 +67,7 @@ exports.GetCart = async (req, res) => {
     });
 }
 
-//Aumentar o dirminuir la cantidad de un elemento del carrito
+//editar la cantidad de un elemento del carrito
 exports.ModifyQuantity = async (req, res) => {
     const data = req.body
 
