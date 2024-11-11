@@ -29,10 +29,10 @@ exports.AddProduct = [
     async (req, res) => {
         try {
             // Get form data from request body
-            const { Nombre, Descripcion, Precio, Categoria, Color } = req.body;
+            const { Nombre, Descripcion, Precio, Categoria, Color, Tamaño, Stock } = req.body;
             const { buffer } = req.file; // Image file is now available in req.file
             console.log("hola");
-            if (!Nombre || !Descripcion || !Precio || !buffer || !Categoria || !Color) {
+            if (!Nombre || !Descripcion || !Precio || !buffer || !Categoria || !Color || !Tamaño || !Stock) {
                 return res.status(400).json({ error: 'Missing product data or image' });
             }
             console.log("hola2");
@@ -43,10 +43,19 @@ exports.AddProduct = [
             await UploadImg(uniqueFileName, buffer);
             console.log("hola4");
             // Insert product details into the database
-            const query = 'INSERT INTO Productos (Nombre, Descripcion, Precio, Imagen, Categoria, Color) VALUES (?, ?, ?, ?, ?, ?)';
-            const values = [Nombre, Descripcion, Precio, uniqueFileName, Categoria, Color];
+            const queryProducto = 'INSERT INTO Productos (Nombre, Descripcion, Precio, Imagen, Categoria, Color) VALUES (?, ?, ?, ?, ?, ?)';
+            const valuesProducto = [Nombre, Descripcion, Precio, uniqueFileName, Categoria, Color];
 
-            await queryPromise(query, values);
+
+            // Run the product insert query and get the inserted ID
+            const result = await queryPromise(queryProducto, valuesProducto);
+            const productId = result.insertId; // Assuming MySQL/MariaDB and auto-increment ID
+
+            // Insert stock details into the Stock table using the product ID
+            const queryStock = 'INSERT INTO Stock (ProductID, Tamaño, Stock) VALUES (?, ?, ?)';
+            const valuesStock = [productId, Tamaño, Stock];
+
+            await queryPromise(queryStock, valuesStock);
 
             // Respond with success message
             res.status(201).json({ message: 'Producto agregado con éxito' });

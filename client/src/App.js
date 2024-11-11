@@ -10,9 +10,6 @@ import AddProduct from "./components/AddProduct";
 import Cart from "./components/Cart";
 import Payments from "./components/Payments";
 import OrderSummary from "./components/OrderSummary";
-import Cart from "./components/Cart";
-import Payments from "./components/Payments";
-import OrderSummary from "./components/OrderSummary"
 
 function App() {
   return (

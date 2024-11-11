@@ -8,77 +8,76 @@ const AddProduct = () => {
         Precio: '',
         Categoria: '',
         Color: '',
+        Tamaño: '',
+        Stock: '',        
         Imagen: null,
-
     });
+
+    const category_options = [
+        { value: 'Poleras', label: 'Poleras' },
+        { value: 'Polerones', label: 'Polerones' },
+        { value: 'Pantalones', label: 'Pantalones' }
+    ];
+
+    const color_options = [
+        { value: 'Negro', label: 'Negro' },
+        { value: 'Rojo', label: 'Rojo' },
+        { value: 'Blanco', label: 'Blanco' }
+    ];
+
+    const size_options = [
+        { value: 'L', label: 'L' },
+        { value: 'M', label: 'M' },
+        { value: 'S', label: 'S' }
+    ];
 
     const [message, setMessage] = useState('');
 
-    // Handle input change for text fields (Nombre, Descripcion, Precio)
     const handleChange = (e) => {
         const { name, value } = e.target;
-        console.log(name, value)
         setProductData({
             ...productData,
             [name]: value,
-            
         });
     };
 
-    // Handle image file change
     const handleImageChange = (e) => {
-        console.log(e.target.files[0]); // Log the selected image file
         setProductData({
             ...productData,
-            Imagen: e.target.files[0], // Append the image file
+            Imagen: e.target.files[0],
         });
     };
 
-    // Handle form submission
     const handleSubmit = async (e) => {
-        console.log("handleSubmit started");
         e.preventDefault();
 
-        const token = localStorage.getItem('token'); // Fetch token from localStorage
+        const token = localStorage.getItem('token');
         if (!token) {
             setMessage('Error: No se encontró un token de autenticación');
             return;
         }
-        console.log("Token fetched:", token);
 
-        // Create a FormData object to send multipart form data
         const formData = new FormData();
         formData.append('Nombre', productData.Nombre);
         formData.append('Descripcion', productData.Descripcion);
         formData.append('Precio', productData.Precio);
-        formData.append('Imagen', productData.Imagen); // Append image file
+        formData.append('Imagen', productData.Imagen);
         formData.append('Categoria', productData.Categoria); 
-        formData.append('Color', productData.Color); 
+        formData.append('Color', productData.Color);
+        formData.append('Tamaño', productData.Tamaño);
+        formData.append('Stock', productData.Stock);
 
-
-        for (let [key, value] of formData.entries()) {
-            console.log(`${key}: ${value}`);
-        }
-
-        console.log("FormData created");
 
         try {
-            // Send a POST request to add the product
             const response = await axios.post('http://localhost:5000/AddProduct', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    'Authorization': `Bearer ${token}`, // Added 'Bearer' prefix for token
+                    'Authorization': `Bearer ${token}`,
                 },
             });
-            console.log("Product added successfully");
 
-            // Update the UI with a success message
             setMessage('Producto agregado con éxito');
-            console.log('Server response:', response);
         } catch (error) {
-            console.error('Error while adding product:', error);
-
-            // Show error message on the UI
             setMessage('Error al agregar el producto');
         }
     };
@@ -87,6 +86,7 @@ const AddProduct = () => {
         <div className="container py-5">
             <h2 className="mb-4">Agregar Nuevo Producto</h2>
             <form onSubmit={handleSubmit}>
+            
                 <div className="mb-3">
                     <label className="form-label">Nombre del Producto</label>
                     <input
@@ -131,22 +131,62 @@ const AddProduct = () => {
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Categoría</label>
-                    <input
-                        type="text"
+                    <select
                         className="form-control"
                         name="Categoria"
                         value={productData.Categoria}
                         onChange={handleChange}
                         required
-                    />
+                    >
+                        <option value="">Seleccione una categoría</option>
+                        {category_options.map((option) => (
+                            <option key={option.value} value={option.value}>
+                                {option.label}
+                            </option>
+                        ))}
+                    </select>
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Color</label>
-                    <input
-                        type="text"
+                    <select
                         className="form-control"
                         name="Color"
                         value={productData.Color}
+                        onChange={handleChange}
+                        required
+                    >
+                        <option value="">Seleccione un color</option>
+                        {color_options.map((option) => (
+                            <option key={option.value} value={option.value}>
+                                {option.label}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Tamaño</label>
+                    <select
+                        className="form-control"
+                        name="Tamaño"
+                        value={productData.Tamaño}
+                        onChange={handleChange}
+                        required
+                    >
+                        <option value="">Seleccione un tamaño</option>
+                        {size_options.map((option) => (
+                            <option key={option.value} value={option.value}>
+                                {option.label}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Stock</label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        name="Stock"
+                        value={productData.Stock}
                         onChange={handleChange}
                         required
                     />
