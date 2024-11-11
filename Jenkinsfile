@@ -111,13 +111,17 @@ pipeline {
         success {
             echo 'Despliegue y pruebas exitosas'
             sh '''
-            curl -X POST -H "Content-type: application/json" --data "{\"text\":\"Despliegue y pruebas exitosas\"}" ${SLACK_WEBHOOK_URL}
+            curl -X POST -H 'Content-type: application/json' \
+            --data '{"text":"Despliegue y pruebas exitosas"}' \
+            ${SLACK_WEBHOOK_URL}
             '''
         }
         failure {
             echo 'Pipeline fallido, el despliegue no se realizó'
             sh '''
-            curl -X POST -H "Content-type: application/json" --data "{\"text\":\"Pipeline fallido, el despliegue no se realizó\"}" ${SLACK_WEBHOOK_URL}
+            curl -X POST -H "Content-type: application/json" \
+            --data "{\"text\":\"Prueba desde Jenkins\"}" \
+            ${SLACK_WEBHOOK_URL}
             '''
         }
     }
