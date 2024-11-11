@@ -6,7 +6,7 @@ const { object, string, date } = require('yup');
 let UserSchema = object({
     Nombre: string().required("Nombre es obligatorio"),
     Apellido: string().required("Apellido es obligatorio"),
-    Correo: string().email("Email no es válido").required("Email es obligatorio"),
+    Correo: string().email("Email no es válido").required("Email obligatorio"),
     Contraseña: string()
         .min(5, "La contraseña debe contener al menos 5 caracteres")
         .required("Contraseña es obligatoria")

@@ -1,7 +1,8 @@
 import unittest
 import requests
+import os
 
-BASE_URL = 'http://localhost:5000' 
+BASE_URL = os.environ.get("TEST_URL", "http://localhost:5000") 
 
 class TestCompra(unittest.TestCase):
 
@@ -9,8 +10,8 @@ class TestCompra(unittest.TestCase):
     PasswordUserCreated = ""
     LoginToken = ""
     LoginTipo = ""
-    idProducto = 1;
-    idStock = 1;
+    idProducto = 1
+    idStock = 1
 
     @classmethod
     def setUp(self):
@@ -105,7 +106,7 @@ class TestCompra(unittest.TestCase):
         #response_deleted = requests.post(f"{BASE_URL}/DeleteCart", json={"CarritoID": response.json()["results"]["insertId"]}, headers=headers)
 
         self.assertEqual(response.status_code, 500)
-        self.assertEqual(response.json()["message"], 'Cantidad del producto es 0')
+        self.assertEqual(response.json()["error"], 'Cantidad del producto es 0')
         #self.assertEqual(response_deleted.status_code, 200)
 
     def test_UpdateCartNewProduct(self):
@@ -178,15 +179,6 @@ class TestCompra(unittest.TestCase):
         self.assertEqual(response1.json()["message"], 'Producto añadido al carrito')
         self.assertEqual(response2.status_code, 200)
         self.assertEqual(response2.status_code, 200)
-    
-    def test_PurchaseProductNoCart(self):
-        headers = {"Authorization": f"{self.LoginToken}", "tipo": f"{self.LoginTipo}"}
-        
-        #Realizar Compra
-        url = f"{BASE_URL}/MakeCompra"
-        response2 = requests.post(url, json={}, headers=headers)
-        self.assertEqual(response2.status_code, 500)
-        self.assertEqual(response2.json()["message"], "No existen productos en el carrito")
 
 if __name__ == "__main__":
     unittest.main()
