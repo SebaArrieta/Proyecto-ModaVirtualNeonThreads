@@ -120,7 +120,7 @@ const generateUniqueCodigoCompra = async () => {
         await new Promise((resolve, reject) => { // comprueba que el string generado sea unico
             db.query(checkCodigoQuery, (err, results) => {
                 if (err) {
-                    console.error('Error checking Codigo_Compra:', err);
+                    console.error('Error busquando el codigo de compra', err);
                     return reject(err);
                 }
 
