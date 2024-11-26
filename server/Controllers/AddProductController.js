@@ -59,9 +59,10 @@ exports.AddProduct = [
             // Run the product insert query and get the inserted ID
             const result = await queryPromise(queryProducto, valuesProducto);
             const productId = result.insertId; // Assuming MySQL/MariaDB and auto-increment ID
+            console.log("productId: ", productId);
 
             // Insert stock details into the Stock table using the product ID
-            const queryStock = 'INSERT INTO Stock (ProductID, Tamaño, Stock) VALUES (?, ?, ?)';
+            const queryStock = 'INSERT INTO Stock (Stock_Productos_FK, Tamaño, Stock) VALUES (?, ?, ?)';
             const valuesStock = [productId, Size, Stock];
 
             await queryPromise(queryStock, valuesStock);

@@ -34,7 +34,8 @@ const Home = () => {
                     <select className="form-select">
                         <option value="0-50">Negro</option>
                         <option value="51-100">Rojo</option>
-                        <option value="101-200">blanco</option>
+                        <option value="101-200">Blanco</option>
+                        <option value="101-200">Azul</option>
                     </select>
                 </div>
             </div>
