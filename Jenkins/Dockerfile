@@ -2,8 +2,8 @@ FROM jenkins/jenkins:lts
 
 USER root
 
-# Install make and other build tools
-RUN apt-get update && apt-get install -y build-essential
+# Install make, Netcat, and other build tools
+RUN apt-get update && apt-get install -y build-essential netcat-openbsd
 
 # Install Docker CLI
 RUN apt-get update && apt-get install -y docker.io
