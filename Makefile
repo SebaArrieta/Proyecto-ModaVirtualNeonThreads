@@ -9,3 +9,6 @@ stop:
 
 Compra_test:
 	python3 -m unittest ./tests/Compra_test.py
+
+User_test:
+	python3 -m unittest ./tests/User_test.py
