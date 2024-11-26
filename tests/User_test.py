@@ -54,6 +54,7 @@ class TestUserAPI(unittest.TestCase):
         self.assertEqual(response3.json()[0]["Nombre"], data1["Nombre"])
         self.assertEqual(response3.json()[0]["Apellido"], data1["Apellido"])
         self.assertEqual(response3.json()[0]["Correo"], data1["Correo"])
+        self.assertNotEqual(response3.json()[0]["Contraseña"], data1["Contraseña"])
         self.assertEqual(response3.json()[0]["Direccion"], data1["Direccion"])
         self.assertEqual(response3.json()[0]["ZIP"], data1["Zip"])
         self.assertEqual(response3.json()[0]["Ciudad"], data1["Ciudad"])
