@@ -43,25 +43,46 @@ const GetImg = async (object) => {
 }
 
 exports.GetProducts = async (req, res) => {
-    const query = `SELECT p.id, p.Nombre, p.Precio, p.Descripcion, p.Imagen, p.Categoria, p.Color, s.tamaño, s.Stock
-                   FROM Productos p
-                   JOIN Stock s ON p.id = s.Stock_Productos_FK
-                   WHERE s.Stock > 0
-                   GROUP BY p.id, p.Nombre, p.Precio, p.Descripcion, p.Imagen, p.Categoria, p.Color;`;
+    // Desestructuramos los parámetros de la consulta, con valores predeterminados en blanco
+    const { categoria, color } = req.query;
+
+    // Construcción de la consulta base
+    let query = `
+        SELECT p.id, p.Nombre, p.Precio, p.Descripcion, p.Imagen, p.Categoria, p.Color, s.tamaño, s.Stock
+        FROM Productos p
+        JOIN Stock s ON p.id = s.Stock_Productos_FK
+        WHERE s.Stock > 0
+    `;
+
+    // Añadimos filtros si están presentes en los parámetros
+    if (categoria) {
+        query += ` AND p.Categoria = '${categoria}'`;
+    }
+
+    if (color) {
+        query += ` AND p.Color = '${color}'`;
+    }
+
+    query += ' GROUP BY p.id, p.Nombre, p.Precio, p.Descripcion, p.Imagen, p.Categoria, p.Color';
+
+    console.log("Query:", query);  // Para verificar la consulta generada
 
     db.query(query, async (err, results) => {
         if (err) {
-          console.error('Error en la consulta:', err);
-          return res.status(500).json({ error: 'Error en la consulta' });
+            console.error('Error en la consulta:', err);
+            return res.status(500).json({ error: 'Error en la consulta' });
         }
 
-        for(let i = 0; i < results.length; i++){
-            await GetImg(results[i])
+        // Procesamos la imagen después de la consulta
+        for (let i = 0; i < results.length; i++) {
+            await GetImg(results[i]);
         }
 
-        res.json(results)
+        // Respondemos con los productos encontrados
+        res.json(results);
     });
 };
+
 
 exports.AddProductTest = async (req, res) => {
     if(req.userTipo == 0){
