@@ -156,31 +156,66 @@ De igual modo, desde la carpeta test las pruebas que utilizen jest pueden ejecut
 
 ---
 
-### Prueba 1.6: Realizar una compra sin productos en el carrito
-
-- **Descripción**: Realizar una compra sin productos en el carrito.
-- **Entradas**: Credenciales del usuario creado para las pruebas.
-- **Salida esperada**: Una respuesta con estatus 500 y un mensaje del tipo "No existen productos en el carrito".
-- **Salida obtenida**: `test_PurchaseProductNoCart (Compra_test.TestCompra.test_PurchaseProductNoCart)` ... **FAIL**.
-  - **Error**: AssertionError: 200 != 500.
-
----
-
-### Prueba 1.7: Eliminar Producto
-- **Descripción**: Eliminar un producto de la base de datos.
-- **Entradas**: ID del producto a eliminar (en este caso, id: 1).
-- **Salida esperada**: Una respuesta con estatus 200 y un mensaje que indique que la eliminación fue exitosa.
-- **Salida obtenida**: test_DeleteProduct (Product_test.ProductController.test_DeleteProduct) ... PASS.
-  - **Resultado**: Se eliminó correctamente el producto con ID 1.
+### Prueba 1.6: Registrar un usuario
+- **Descripción**: Registrar un usuario y comparar los datos ingresados con los almacenados en la bd.
+- **Entradas**: datos de un usuario.
+- **Salida esperada**: Una respuesta que muestra que los datos ingresados son los mismos que los almacenados en la bd, una excepción a esto es que la contraseña no debe ser la misma porque esta debe estar encriptada.
+- **Salida obtenida**: test_Register (User_test.TestUserAPI.test_Register) ... ok.
+  - **Resultado**: los datos coinciden.
 
 ---
 
-### Prueba 1.8: Obtener Stock de Producto
-- **Descripción**: Obtener el stock de un producto por su ID.
-- **Entradas**: ID del producto (en este caso, ProductosId: 1).
-- **Salida esperada**: Una respuesta con estatus 200 y un JSON con los detalles del stock (en este caso, Stock: 10, Tamaño: M).
-- **Salida obtenida**: test_GetStock (Product_test.ProductController.test_GetStock) ... PASS.
-  - **Resultado**: Se obtuvo correctamente el stock del producto con ID 1, con 10 unidades disponibles en tamaño M.
+### Prueba 1.7: Registrar un usuario sin contraseña
+- **Descripción**: Registrar un usuario sin ingresar una contraseña.
+- **Entradas**: datos del usuario con la contraseña vacia.
+- **Salida esperada**: 'La contraseña debe tener al menos una letra mayúscula, una minúscula y un número'.
+- **Salida obtenida**: test_SignUp_NoPassword (User_test.TestUserAPI.test_SignUp_NoPassword) ... ok
+  - **Resultado**: No se permitio el registro al no tener una contraseña
+  
+---
+
+### Prueba 1.8: Registrar un usuario con una contraseña corta
+- **Descripción**: Registrar un usuario con una contraseña de un largo menor a los 5 caracteres exigidos.
+- **Entradas**: datos del usuario con la contraseña sin cumplir con los requerimientos.
+- **Salida esperada**: 'La contraseña debe tener al menos una letra mayúscula, una minúscula y un número'.
+- **Salida obtenida**: test_SignUp_NoPassword (User_test.TestUserAPI.test_SignUp_NoPassword) ... ok
+  - **Resultado**: No se permitio el registro al tener una contraseña muy corta
+  
+---
+
+### Prueba 1.9: Registrar un usuario con un email ya existente
+- **Descripción**: Registrar un usuario con un email existente en la bd.
+- **Entradas**: datos del usuario con un email repetido.
+- **Salida esperada**: 'Correo ya existe'.
+- **Salida obtenida**: test_SignUp_RepeatedEmail (User_test.TestUserAPI.test_SignUp_RepeatedEmail) ... ok
+  - **Resultado**: No se permitio el registro debido a que ya existe dicho email
+  
+---
+
+### Prueba 1.10: Registrar un usuario con un email vacio
+- **Descripción**: Registrar un usuario sin email.
+- **Entradas**: datos del usuario sin email.
+- **Salida esperada**: 'Email obligatorio'.
+- **Salida obtenida**: test_SignUp_NoEmail (User_test.TestUserAPI.test_SignUp_NoEmail) ... ok
+  - **Resultado**: No se permitio el registro debido a que no ingreso el email
+  
+---
+
+### Prueba 1.11: Obtener un metodo de pago
+- **Descripción**: dado el usuario registrado se deben pbtener sus metodos de pago.
+- **Entradas**: credenciales del usuario registrado.
+- **Salida esperada**: Una lista con los metodos de pago.
+- **Salida obtenida**: test_get_payment_method_user (User_test.TestUserPaymentAPI.test_get_payment_method_user) ... ok
+  - **Resultado**: Se obtuvo una lista con los metodos de pago
+  
+---
+
+### Prueba 1.12: Registrar y eliminar un metodo de pago
+- **Descripción**: Registrar un nuevo metodo de pago y eliminarlo segun el id.
+- **Entradas**: credenciales del usuario y el id del nuevo metodo de pago creado.
+- **Salida esperada**: El id del nuevo metodo de pago y un status 200 en la eliminación.
+- **Salida obtenida**: test_post_delete_payment_method_user (User_test.TestUserPaymentAPI.test_post_delete_payment_method_user) ... ok
+  - **Resultado**: Se creo y elimino el nuevo metodo de pago.
   
 ---
 
