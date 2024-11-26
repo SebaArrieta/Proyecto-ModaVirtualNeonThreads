@@ -22,7 +22,7 @@ const AddProduct = () => {
     const color_options = [
         { value: 'Negro', label: 'Negro' },
         { value: 'Rojo', label: 'Rojo' },
-        { value: 'Blanco', label: 'Blanco' }
+        { value: 'Blanco', label: 'Blanco' },
         { value: 'Azul', label: 'Azul' }
     ];
 
