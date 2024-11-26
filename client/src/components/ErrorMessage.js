@@ -13,7 +13,6 @@ const ErrorMessage = ({ message, onClose }) => {
         }
     }, [message, onClose]);
 
-    // Si no hay mensaje, no mostrar nada
     if (!message) return null;
 
     return (
