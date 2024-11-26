@@ -70,7 +70,7 @@ exports.SignUp = async (req, res) => {
                   return res.status(500).json({ error: 'Error en la consulta' });
                 }
         
-                res.json(results)
+                res.status(200).json(results)
             });
         });
     } catch (validationErrors) {
