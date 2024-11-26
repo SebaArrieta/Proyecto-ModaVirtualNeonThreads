@@ -29,10 +29,19 @@ exports.AddProduct = [
     async (req, res) => {
         try {
             // Get form data from request body
-            const { Nombre, Descripcion, Precio, Categoria, Color, Tamaño, Stock } = req.body;
+            const { Nombre, Descripcion, Precio, Categoria, Color, Size, Stock } = req.body;
             const { buffer } = req.file; // Image file is now available in req.file
             console.log("hola");
-            if (!Nombre || !Descripcion || !Precio || !buffer || !Categoria || !Color || !Tamaño || !Stock) {
+            
+            if (!Nombre || !Descripcion || !Precio || !buffer || !Categoria || !Color || !Size || !Stock) {
+                console.log("erroorrrrr");
+                console.log(Nombre);
+                console.log(Precio);
+                console.log(buffer);
+                console.log(Categoria);
+                console.log(Color);
+                console.log(Size);
+                console.log(Stock);
                 return res.status(400).json({ error: 'Missing product data or image' });
             }
             console.log("hola2");
@@ -53,7 +62,7 @@ exports.AddProduct = [
 
             // Insert stock details into the Stock table using the product ID
             const queryStock = 'INSERT INTO Stock (ProductID, Tamaño, Stock) VALUES (?, ?, ?)';
-            const valuesStock = [productId, Tamaño, Stock];
+            const valuesStock = [productId, Size, Stock];
 
             await queryPromise(queryStock, valuesStock);
 

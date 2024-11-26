@@ -64,7 +64,7 @@ const AddProduct = () => {
         formData.append('Imagen', productData.Imagen);
         formData.append('Categoria', productData.Categoria); 
         formData.append('Color', productData.Color);
-        formData.append('Tamaño', productData.Tamaño);
+        formData.append('Size', productData.Tamaño);
         formData.append('Stock', productData.Stock);
 
 
