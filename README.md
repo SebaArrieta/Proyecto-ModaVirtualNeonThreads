@@ -8,8 +8,6 @@ https://github.com/INF331-Equipo9/Proyecto-ModaVirtualNeonThreads/blob/main/Grup
 
 # Guía de Instalación
 
-test jenk
-
 ### 1. Iniciar la instancia RDS en AWS
 
 Para ejecutar el proyecto, es necesario iniciar la instancia RDS en AWS. Sigue estos pasos:
