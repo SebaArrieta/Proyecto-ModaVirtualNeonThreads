@@ -37,11 +37,11 @@ def test_first_product_click():
         time.sleep(2)  # Wait for the navigation to complete
 
         # Validate redirection to the product page
-        assert "/product" in driver.current_url, f"Did not navigate to product page. URL: {driver.current_url}"
+        assert "/product" in driver.current_url, f"No se pudo acceder a . URL: {driver.current_url}"
 
-        print("Test passed: First product successfully clicked and navigated.")
+        print("Test ok: Se clickeó y accedió al primer producto")
     except Exception as e:
-        print(f"Test failed: {e}")
+        print(f"Test fallido: {e}")
     finally:
         driver.quit()
 
