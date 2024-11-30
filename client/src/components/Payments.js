@@ -342,7 +342,7 @@ const Payments = () => {
             </div>
 
             <div className="d-flex justify-content-center align-items-center my-3">
-                <button onClick={handleRealizarCompra} type="submit" className="btn btn-success btn-lg my-2" style={{ padding: '15px 30px' }}>
+                <button onClick={handleRealizarCompra} type="submit" className="btn btn-success btn-lg my-2" style={{ padding: '15px 30px' }} id="pagar">
                     Realizar Compra
                 </button>
             </div>

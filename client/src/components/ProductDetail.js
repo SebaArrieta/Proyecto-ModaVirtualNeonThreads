@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import ErrorMessage from './ErrorMessage';
 
 const ProductDetail = () => {
-    const { id } = useParams();
+    //const { id } = useParams();
     const location = useLocation();
     
     const item = location.state['item'];
@@ -28,7 +28,7 @@ const ProductDetail = () => {
             setError(error.response?.data?.error || "Ocurrio un Error")
             console.log(error)
         });
-    }, [])
+    }, [item])
 
     const handleSizeChange = (e) => {
         const selectedItemId = e.target.value;
@@ -113,8 +113,9 @@ const ProductDetail = () => {
                             max={Select ? Select["Stock"] : 0}
                             style={{ width: '200px', textAlign: 'center' }}
                             className="form-control fs-5 mb-1" // Added margin-bottom to space out from button
+                            id="quantity"
                         />
-                        <button className="btn btn-primary fs-5" style={{ width: '200px', textAlign: 'center' }} onClick={AddToCart}>Agregar al carrito</button>
+                        <button className="btn btn-primary fs-5" style={{ width: '200px', textAlign: 'center' }} onClick={AddToCart} id="agregar">Agregar al carrito</button>
                         {AddSuccess && <div style={{ width: '200px', textAlign: 'center' }} className="alert alert-info fs-6 mt-1" role="alert">Producto Añadido</div>}
                     </div>
                 </div>
