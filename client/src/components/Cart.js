@@ -136,7 +136,7 @@ const Cart = () => {
                     <h4>Total: {calculateTotalPrice()} $</h4>
                 </div>
 
-                <button onClick={() => goToPayments(CartItems)} className="mt-4 btn btn-primary">
+                <button onClick={() => goToPayments(CartItems)} className="mt-4 btn btn-primary" id="pago">
                     Proceder al Pago
                 </button>
             </div>

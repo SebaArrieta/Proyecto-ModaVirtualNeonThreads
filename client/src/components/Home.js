@@ -50,7 +50,7 @@ const Home = () => {
     const sideMenu = (
         <div className="col-md-3 p-4 d-flex flex-column" style={{ backgroundColor: 'white' }}>
             <div className="bg-light p-4" style={{ backgroundColor: 'white' }}>
-                <h4 classname = "text-white bg-dark">Filtrar Productos</h4>
+                <h4 className = "text-white bg-dark">Filtrar Productos</h4>
                 <div className="mb-3">
                     <label className="form-label">Categoria</label>
                     <select
