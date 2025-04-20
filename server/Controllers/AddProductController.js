@@ -7,7 +7,7 @@ const { v4: uuidv4 } = require('uuid');
 const { promisify } = require('util');
 const queryPromise = promisify(db.query).bind(db);
 
-const client_s3 = new S3Client({ region: "sa-east-1" });
+const client_s3 = new S3Client({ region: "us-east-2" });
 
 const UploadImg = async (fileName, imageBuffer) => {
     const input_s3 = {
