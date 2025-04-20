@@ -5,41 +5,7 @@ https://youtu.be/SheCP11RaFs
 
 # Guía de Instalación
 
-### 1. Iniciar la instancia RDS en AWS
-
-Para ejecutar el proyecto, es necesario iniciar la instancia RDS en AWS. Sigue estos pasos:
-
-### a) Ingreso con credenciales IAM
-
-Utiliza las siguientes credenciales para acceder a la consola de AWS desde el siguiente enlace:
-
-https://533267310060.signin.aws.amazon.com/console
-
-- **Usuario IAM**: `ProyectoIAM`
-- **Contraseña**: `ProyectoEquipo9`
-
-### b) Buscar y acceder a RDS
-
-1. Una vez dentro de la consola de AWS, busca "RDS" en la barra de búsqueda, como se muestra en la siguiente imagen:
-
-   ![Buscar RDS](https://github.com/user-attachments/assets/447b7d17-064b-43aa-88dc-8c515f8c8456)
-
-2. En el panel izquierdo, selecciona la opción **"Bases de datos"**.
-
-### c) Verificar la región
-
-Asegúrate de que te encuentras en la **región de São Paulo**, como se muestra en la siguiente imagen:
-
-   ![Región de São Paulo](https://github.com/user-attachments/assets/bd8cfcbe-afde-4271-8891-13ab8db508f2)
-
-### d) Iniciar la base de datos
-
-1. Selecciona la base de datos en la lista.
-2. En las **acciones** disponibles, selecciona la opción **"Comenzar"**. El proceso de inicio puede tardar unos minutos:
-
-   ![Iniciar base de datos](https://github.com/user-attachments/assets/31518e8d-6d32-4824-be7d-46a6cbb5e2f0)
-
-### 2. Ejecutar el programa y las pruebas
+### 1. Ejecutar el programa y las pruebas
 
 Una vez que la base de datos esté activa, puedes proceder a ejecutar el programa y las pruebas unitarias utilizando los siguientes comandos en la terminal:
 
